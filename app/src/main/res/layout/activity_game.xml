@@ -23,4 +23,67 @@
         tools:layout_editor_absoluteY="141dp"
         tools:ignore="MissingConstraints"/>
 
+    <ImageView
+        android:id="@+id/die1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/red1"
+        tools:layout_editor_absoluteX="66dp"
+        tools:layout_editor_absoluteY="301dp"
+        tools:ignore="MissingConstraints"/>
+
+    <ImageView
+        android:id="@+id/die2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/red2"
+        tools:layout_editor_absoluteX="165dp"
+        tools:layout_editor_absoluteY="301dp"
+        tools:ignore="MissingConstraints"/>
+
+    <ImageView
+        android:id="@+id/die3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/red3"
+        tools:layout_editor_absoluteX="263dp"
+        tools:layout_editor_absoluteY="301dp"
+        tools:ignore="MissingConstraints"/>
+
+    <ImageView
+        android:id="@+id/die4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/red4"
+        tools:layout_editor_absoluteX="66dp"
+        tools:layout_editor_absoluteY="412dp"
+        tools:ignore="MissingConstraints"/>
+
+    <ImageView
+        android:id="@+id/die5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/red5"
+        tools:layout_editor_absoluteX="165dp"
+        tools:layout_editor_absoluteY="412dp"
+        tools:ignore="MissingConstraints"/>
+
+    <ImageView
+        android:id="@+id/die6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/red6"
+        tools:layout_editor_absoluteX="263dp"
+        tools:layout_editor_absoluteY="412dp"
+        tools:ignore="MissingConstraints"/>
+
+    <Button
+        android:id="@+id/rollButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/roll_dice"
+        tools:layout_editor_absoluteX="161dp"
+        tools:layout_editor_absoluteY="543dp"
+        tools:ignore="MissingConstraints" />
+
 </android.support.constraint.ConstraintLayout>
