@@ -1,4 +1,4 @@
-package com.example.thirty;
+package com.example.thirty.model;
 
 public class Round {
     private int round;
