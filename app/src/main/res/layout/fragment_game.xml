@@ -1,71 +1,99 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="80dp"
+    android:orientation="horizontal"
+    android:layout_centerHorizontal="true"
     tools:context=".fragment.GameFragment">
 
-    <ImageButton
-        android:id="@+id/die1"
+    <LinearLayout
+        android:id="@+id/row1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/red1"
-        tools:layout_editor_absoluteX="66dp"
-        tools:layout_editor_absoluteY="301dp"
-        tools:ignore="MissingConstraints"/>
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
 
-    <ImageButton
-        android:id="@+id/die2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/red2"
-        tools:layout_editor_absoluteX="165dp"
-        tools:layout_editor_absoluteY="301dp"
-        tools:ignore="MissingConstraints"/>
+        <ImageButton
+            android:id="@+id/die1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/red1"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp" />
 
-    <ImageButton
-        android:id="@+id/die3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/red3"
-        tools:layout_editor_absoluteX="263dp"
-        tools:layout_editor_absoluteY="301dp"
-        tools:ignore="MissingConstraints"/>
+        <ImageButton
+            android:id="@+id/die2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/red2"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp" />
 
-    <ImageButton
-        android:id="@+id/die4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/red4"
-        tools:layout_editor_absoluteX="66dp"
-        tools:layout_editor_absoluteY="412dp"
-        tools:ignore="MissingConstraints"/>
+        <ImageButton
+            android:id="@+id/die3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/red3"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp" />
 
-    <ImageButton
-        android:id="@+id/die5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/red5"
-        tools:layout_editor_absoluteX="165dp"
-        tools:layout_editor_absoluteY="412dp"
-        tools:ignore="MissingConstraints"/>
+    </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/die6"
+    <LinearLayout
+        android:id="@+id/row2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/red6"
-        tools:layout_editor_absoluteX="263dp"
-        tools:layout_editor_absoluteY="412dp"
-        tools:ignore="MissingConstraints"/>
+        android:layout_below="@id/row1"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/die4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/red4"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp" />
+
+        <ImageButton
+            android:id="@+id/die5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/red5"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp" />
+
+        <ImageButton
+            android:id="@+id/die6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/red6"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp" />
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/rollButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/roll_dice"
-        tools:layout_editor_absoluteX="161dp"
-        tools:layout_editor_absoluteY="543dp"
-        tools:ignore="MissingConstraints" />
+        android:layout_below="@+id/row2"
+        android:layout_centerHorizontal="true"
+        android:text="@string/roll_dice" />
 
-</android.support.constraint.ConstraintLayout>
+
+</RelativeLayout>
