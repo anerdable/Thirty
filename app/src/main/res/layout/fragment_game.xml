@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.GameFragment">
+
+    <ImageButton
+        android:id="@+id/die1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/red1"
+        tools:layout_editor_absoluteX="66dp"
+        tools:layout_editor_absoluteY="301dp"
+        tools:ignore="MissingConstraints"/>
+
+    <ImageButton
+        android:id="@+id/die2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/red2"
+        tools:layout_editor_absoluteX="165dp"
+        tools:layout_editor_absoluteY="301dp"
+        tools:ignore="MissingConstraints"/>
+
+    <ImageButton
+        android:id="@+id/die3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/red3"
+        tools:layout_editor_absoluteX="263dp"
+        tools:layout_editor_absoluteY="301dp"
+        tools:ignore="MissingConstraints"/>
+
+    <ImageButton
+        android:id="@+id/die4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/red4"
+        tools:layout_editor_absoluteX="66dp"
+        tools:layout_editor_absoluteY="412dp"
+        tools:ignore="MissingConstraints"/>
+
+    <ImageButton
+        android:id="@+id/die5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/red5"
+        tools:layout_editor_absoluteX="165dp"
+        tools:layout_editor_absoluteY="412dp"
+        tools:ignore="MissingConstraints"/>
+
+    <ImageButton
+        android:id="@+id/die6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/red6"
+        tools:layout_editor_absoluteX="263dp"
+        tools:layout_editor_absoluteY="412dp"
+        tools:ignore="MissingConstraints"/>
+
+    <Button
+        android:id="@+id/rollButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/roll_dice"
+        tools:layout_editor_absoluteX="161dp"
+        tools:layout_editor_absoluteY="543dp"
+        tools:ignore="MissingConstraints" />
+
+</android.support.constraint.ConstraintLayout>
