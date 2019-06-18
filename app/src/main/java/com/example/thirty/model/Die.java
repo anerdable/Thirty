@@ -1,11 +1,16 @@
 package com.example.thirty.model;
 
-public class Die {
+import android.view.View;
+
+import java.util.Random;
+
+public class Die implements View.OnClickListener {
     private int value;
     private boolean idle, used;
 
-    public Die(int value, boolean idle, boolean used){
-        this.value = value;
+    public Die(boolean idle, boolean used){
+        Random random = new Random();
+        this.value = random.nextInt(6) + 1;
         this.idle = idle;
         this.used = used;
     }
@@ -34,5 +39,10 @@ public class Die {
         value = 0;
         idle = false;
         used = false;
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }

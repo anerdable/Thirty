@@ -2,10 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="80dp"
     android:orientation="horizontal"
     android:layout_centerHorizontal="true"
+    android:id="@+id/fragment_game"
     tools:context=".fragment.GameFragment">
 
     <LinearLayout
@@ -15,31 +15,28 @@
         android:layout_centerHorizontal="true"
         android:orientation="horizontal">
 
-        <ImageButton
+        <ImageView
             android:id="@+id/die1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/red1"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/die2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/red2"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/die3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/red3"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
@@ -55,31 +52,28 @@
         android:layout_centerHorizontal="true"
         android:orientation="horizontal">
 
-        <ImageButton
+        <ImageView
             android:id="@+id/die4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/red4"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/die5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/red5"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/die6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/red6"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
@@ -91,6 +85,7 @@
         android:id="@+id/rollButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/button_design"
         android:layout_below="@+id/row2"
         android:layout_centerHorizontal="true"
         android:text="@string/roll_dice" />
