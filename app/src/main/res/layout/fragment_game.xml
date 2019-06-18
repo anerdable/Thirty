@@ -8,85 +8,20 @@
     android:id="@+id/fragment_game"
     tools:context=".fragment.GameFragment">
 
-    <LinearLayout
-        android:id="@+id/row1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <GridLayout
+        android:id="@+id/gl"
         android:layout_centerHorizontal="true"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/die1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp" />
-
-        <ImageView
-            android:id="@+id/die2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp" />
-
-        <ImageView
-            android:id="@+id/die3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/row2"
+        android:orientation="horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/row1"
-        android:layout_centerHorizontal="true"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/die4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp" />
-
-        <ImageView
-            android:id="@+id/die5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp" />
-
-        <ImageView
-            android:id="@+id/die6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp" />
-
-    </LinearLayout>
+        android:layout_height="wrap_content">
+    </GridLayout>
 
     <Button
         android:id="@+id/rollButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button_design"
-        android:layout_below="@+id/row2"
+        android:layout_below="@+id/gl"
         android:layout_centerHorizontal="true"
         android:text="@string/roll_dice" />
 

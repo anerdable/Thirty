@@ -2,15 +2,12 @@ package com.example.thirty.model;
 
 import android.view.View;
 
-import java.util.Random;
-
-public class Die implements View.OnClickListener {
+public class Die {
     private int value;
     private boolean idle, used;
 
-    public Die(boolean idle, boolean used){
-        Random random = new Random();
-        this.value = random.nextInt(6) + 1;
+    public Die(int value, boolean idle, boolean used){
+        this.value = value;
         this.idle = idle;
         this.used = used;
     }
@@ -27,6 +24,10 @@ public class Die implements View.OnClickListener {
         return used;
     }
 
+    public void setValue(int newValue){
+        value = newValue;
+    }
+
     public void setIdle(boolean newIdle){
         idle = newIdle;
     }
@@ -41,8 +42,4 @@ public class Die implements View.OnClickListener {
         used = false;
     }
 
-    @Override
-    public void onClick(View v) {
-
-    }
 }
