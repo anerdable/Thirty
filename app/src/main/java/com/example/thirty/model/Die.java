@@ -16,11 +16,11 @@ public class Die {
         return value;
     }
 
-    public boolean getIdle(){
+    public boolean isIdle(){
         return idle;
     }
 
-    public boolean getUsed(){
+    public boolean isUsed(){
         return used;
     }
 

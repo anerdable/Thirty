@@ -5,23 +5,12 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.GridLayout;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.view.*;
+import android.widget.*;
 import com.example.thirty.R;
 import com.example.thirty.activity.MainActivity;
 import com.example.thirty.model.Die;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import static android.graphics.Color.RED;
 
@@ -33,7 +22,7 @@ public class GameFragment extends Fragment {
     private List<Die> dice = new ArrayList<>();
     private Context mContext;
     private Random random = new Random();
-    private GridLayout gl;
+    private GridLayout gl, gl2;
 
     @Override
     public void onAttach(Context context) {
@@ -47,6 +36,7 @@ public class GameFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_game, container, false);
         roll = view.findViewById(R.id.rollButton);
         gl = view.findViewById(R.id.gl);
+        gl2 = view.findViewById(R.id.gl2);
 
         round = 1;
         totalRound = 1;
@@ -72,31 +62,39 @@ public class GameFragment extends Fragment {
             Die die = new Die(1, false, false);
             dice.add(die);
         }
-        setImage();
+        setImages();
     }
 
     private void rollDice(){
         for (Die die : dice){
-            int randomNumber = random.nextInt(6) + 1;
-            die.setValue(randomNumber);
+            if(die.isIdle()){
+                return;
+            } else {
+                int randomNumber = random.nextInt(6) + 1;
+                die.setValue(randomNumber);
+            }
         }
-        setImage();
+        setImages();
     }
 
-    private void setImage(){
+    private void setImages(){
         gl.removeAllViews();
+        gl2.removeAllViews();
         for (Die die : dice){
-            final ImageView image = new ImageView(mContext);
+            int index = dice.indexOf(die);
+            ImageView image = new ImageView(mContext);
             image.setPadding(10, 10, 10, 10);
             int res = getResources().getIdentifier("die" + die.getValue(), "drawable", "com.example.thirty");
             image.setImageResource(res);
-            gl.addView(image);
-            image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    image.setBackgroundColor(RED);
-                }
-            });
+            switch(index){
+                case 0: case 1: case 2:
+                    gl.addView(image);
+                    break;
+                case 3: case 4: case 5:
+                    gl2.addView(image);
+                    break;
+            }
+
         }
     }
 

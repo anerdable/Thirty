@@ -16,12 +16,22 @@
         android:layout_height="wrap_content">
     </GridLayout>
 
+
+    <GridLayout
+        android:id="@+id/gl2"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        android:layout_below="@+id/gl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </GridLayout>
+
     <Button
         android:id="@+id/rollButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button_design"
-        android:layout_below="@+id/gl"
+        android:layout_below="@+id/gl2"
         android:layout_centerHorizontal="true"
         android:text="@string/roll_dice" />
 
