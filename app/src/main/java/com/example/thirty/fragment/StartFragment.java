@@ -1,7 +1,15 @@
 package com.example.thirty.fragment;
 
-import android.content.Context;
-import android.net.Uri;
+/*
+ * StartFragment
+ * An Android implementation of the dice game "thirty throws".
+ * Development of mobile applications
+ * Umeå University, Summer Course 2019
+ *
+ * Paula D'Cruz
+ *
+ */
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,6 +19,7 @@ import android.widget.Button;
 
 import com.example.thirty.R;
 import com.example.thirty.activity.MainActivity;
+
 
 public class StartFragment extends Fragment {
 

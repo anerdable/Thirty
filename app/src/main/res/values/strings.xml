@@ -16,5 +16,8 @@
     <string name="sixes">Sixes:</string>
     <string name="fives">Fives:</string>
     <string name="fours">Fours:</string>
+    <string name="score_round">Score round</string>
+    <string name="play_again">Play again</string>
+    <string name="new_game">New game</string>
 
 </resources>

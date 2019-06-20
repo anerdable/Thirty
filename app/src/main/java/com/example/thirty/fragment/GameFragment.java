@@ -1,28 +1,46 @@
 package com.example.thirty.fragment;
 
+/*
+ * GameFragment
+ * An Android implementation of the dice game "thirty throws".
+ * Development of mobile applications
+ * Umeå University, Summer Course 2019
+ *
+ * Paula D'Cruz
+ *
+ */
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
-import android.view.*;
-import android.widget.*;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.Spinner;
+import android.widget.Toast;
+
 import com.example.thirty.R;
 import com.example.thirty.activity.MainActivity;
+import com.example.thirty.model.Counter;
 import com.example.thirty.model.Die;
+import com.example.thirty.model.Game;
 import java.util.*;
 
 import static android.graphics.Color.RED;
 
-public class GameFragment extends Fragment {
+public class GameFragment extends Fragment implements View.OnClickListener {
 
-    private int round;
-    private int totalRound;
-    private Button roll;
+    private Game mGame;
+    private Button roll, score;
+    private ImageButton die1, die2, die3, die4, die5, die6;
+    private Spinner spinner;
+    private List<ImageButton> images = new ArrayList<>();
     private List<Die> dice = new ArrayList<>();
     private Context mContext;
-    private Random random = new Random();
-    private GridLayout gl, gl2;
 
     @Override
     public void onAttach(Context context) {
@@ -34,26 +52,333 @@ public class GameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game, container, false);
+        die1 = view.findViewById(R.id.die_1);
+        die1.setOnClickListener(this);
+        die2 = view.findViewById(R.id.die_2);
+        die2.setOnClickListener(this);
+        die3 = view.findViewById(R.id.die_3);
+        die3.setOnClickListener(this);
+        die4 = view.findViewById(R.id.die_4);
+        die4.setOnClickListener(this);
+        die5 = view.findViewById(R.id.die_5);
+        die5.setOnClickListener(this);
+        die6 = view.findViewById(R.id.die_6);
+        die6.setOnClickListener(this);
         roll = view.findViewById(R.id.rollButton);
-        gl = view.findViewById(R.id.gl);
-        gl2 = view.findViewById(R.id.gl2);
+        roll.setOnClickListener(this);
+        spinner = view.findViewById(R.id.spinner);
+        score = view.findViewById(R.id.scoreButton);
+        score.setOnClickListener(this);
+        images.add(die1);
+        images.add(die2);
+        images.add(die3);
+        images.add(die4);
+        images.add(die5);
+        images.add(die6);
+        setFirstRound();
+        return view;
+    }
 
+    /**
+     * setFirstRound
+     *
+     * Creates a new set of dice and passes it to a new Game.
+     * Updates the UI with correct image depending on the dice randomly assessed value.
+     *
+     */
+
+    private void setFirstRound(){
+        for (int i = 0; i < 6; i++){
+            Die die = new Die();
+            dice.add(die);
+        }
+        setImages();
+        mGame = new Game(dice);
+        setSpinner();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.rollButton:
+                roll();
+                break;
+            case R.id.scoreButton:
+                score();
+                break;
+            case R.id.die_1:
+            case R.id.die_2:
+            case R.id.die_3:
+            case R.id.die_4:
+            case R.id.die_5:
+            case R.id.die_6:
+                react(v.getId());
+                break;
+        }
+    }
+
+    /**
+     * setImages
+     *
+     * Updates the UI with correct die image depending on its value.
+     */
+
+    private void setImages(){
+        for (Die die : dice){
+            int index = dice.indexOf(die);
+            int res = getResources().getIdentifier("die" + die.getValue(), "drawable", "com.example.thirty");
+            switch(index){
+                case 0:
+                    die1.setImageResource(res);
+                    break;
+                case 1:
+                    die2.setImageResource(res);
+                    break;
+                case 2:
+                    die3.setImageResource(res);
+                    break;
+                case 3:
+                    die4.setImageResource(res);
+                    break;
+                case 4:
+                    die5.setImageResource(res);
+                    break;
+                case 5:
+                    die6.setImageResource(res);
+                    break;
+            }
+        }
+    }
+
+    /**
+     * roll
+     *
+     * Takes the set of dice that was created in the beginning of the game and rolls each die that is
+     * assessed a random value through the model class.
+     * Also toggles the roll button as unclickable if the round is finished to let the user choose a score.
+     * Updates the ImageButton according to the new value of the dice.
+     */
+
+    private void roll(){
+        dice = mGame.newRoll();
+        if (mGame.getRoll() == 3){
+            roll.setClickable(false);
+        }
+        setImages();
+    }
+
+    private void score(){
+        int position = spinner.getSelectedItemPosition();
+        int score = new Counter(dice, mGame.getOptions().get(position)).getResult();
+        mGame.setScore(position, score);
+        mGame.removeOption(position);
+        mGame.newRound();
+    }
+
+
+    /**
+     * react
+     *
+     * Makes each die react to button click and toggles its idle state as well as marking it with a red background.
+     *
+     * @param id takes the id of the die that was clicked to react to the correct ImageButton
+     */
+
+    private void react(int id){
+        switch(id){
+            case R.id.die_1:
+                dice.get(0).switchIdle();
+                if (dice.get(0).isIdle()){
+                    die1.setBackgroundColor(RED);
+                } else {
+                    die1.setBackgroundColor(0);
+                }
+                break;
+            case R.id.die_2:
+                 dice.get(1).switchIdle();
+                 if (dice.get(1).isIdle()){
+                     die2.setBackgroundColor(RED);
+                 } else {
+                     die2.setBackgroundColor(0);
+                 }
+                 break;
+            case R.id.die_3:
+                dice.get(2).switchIdle();
+                if (dice.get(2).isIdle()){
+                    die3.setBackgroundColor(RED);
+                } else {
+                    die3.setBackgroundColor(0);
+                }
+                break;
+            case R.id.die_4:
+                dice.get(3).switchIdle();
+                if (dice.get(3).isIdle()){
+                    die4.setBackgroundColor(RED);
+                } else {
+                    die4.setBackgroundColor(0);
+                }
+                break;
+            case R.id.die_5:
+                dice.get(4).switchIdle();
+                if (dice.get(4).isIdle()){
+                    die5.setBackgroundColor(RED);
+                } else {
+                    die5.setBackgroundColor(0);
+                }
+                break;
+            case R.id.die_6:
+                dice.get(5).switchIdle();
+                if (dice.get(5).isIdle()){
+                    die6.setBackgroundColor(RED);
+                } else {
+                    die6.setBackgroundColor(0);
+                }
+                break;
+        }
+    }
+
+    private void setSpinner() {
+        List<String> options = mGame.getOptions();
+        final MainActivity ma = (MainActivity) getActivity();
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, options);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                int position = spinner.getSelectedItemPosition();
+                int score = new Counter(dice, mGame.getOptions().get(position)).getResult();
+                Toast.makeText(ma, "poäng för " + mGame.getOptions().get(position) + " är " + score, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // TODO Auto-generated method stub
+            }
+        });
+        }
+
+    }
+
+
+    /*
+    private int round;
+    private int totalRound;
+    private Button roll, score;
+    private ImageButton die1, die2, die3, die4, die5, die6;
+    private List<String> options = new ArrayList<>();
+    private List<Die> dice = new ArrayList<>();
+    private List<ImageButton> images = new ArrayList<>();
+    private Context mContext;
+    private Random random = new Random();
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_game, container, false);
+        die1 = view.findViewById(R.id.die_1);
+        die2 = view.findViewById(R.id.die_2);
+        die3 = view.findViewById(R.id.die_3);
+        die4 = view.findViewById(R.id.die_4);
+        die5 = view.findViewById(R.id.die_5);
+        die6 = view.findViewById(R.id.die_6);
+        roll = view.findViewById(R.id.rollButton);
+        score = view.findViewById(R.id.scoreButton);
+        images.add(die1);
+        images.add(die2);
+        images.add(die3);
+        images.add(die4);
+        images.add(die5);
+        images.add(die6);
+        setFirstRound();
+        return view;
+    }
+
+    @Override
+    public void onClick(View v){
+        if (round == 1 && totalRound == 1){
+            return;
+        }
+        switch(v.getId()){
+            case R.id.die_1:
+                if (dice.get(0).isIdle()){
+                    dice.get(0).setIdle(false);
+                    v.setBackgroundColor(0);
+                } else {
+                    dice.get(0).setIdle(true);
+                    v.setBackgroundColor(RED);
+                }
+                break;
+            case R.id.die_2:
+                if (dice.get(1).isIdle()){
+                    dice.get(1).setIdle(false);
+                    v.setBackgroundColor(0);
+                } else {
+                    dice.get(1).setIdle(true);
+                    v.setBackgroundColor(RED);
+                }
+                break;
+            case R.id.die_3:
+                if (dice.get(2).isIdle()){
+                    dice.get(2).setIdle(false);
+                    v.setBackgroundColor(0);
+                } else {
+                    dice.get(2).setIdle(true);
+                    v.setBackgroundColor(RED);
+                }
+                break;
+            case R.id.die_4:
+                if (dice.get(3).isIdle()){
+                    dice.get(3).setIdle(false);
+                    v.setBackgroundColor(0);
+                } else {
+                    dice.get(3).setIdle(true);
+                    v.setBackgroundColor(RED);
+                }
+                break;
+            case R.id.die_5:
+                if (dice.get(4).isIdle()){
+                    dice.get(4).setIdle(false);
+                    v.setBackgroundColor(0);
+                } else {
+                    dice.get(4).setIdle(true);
+                    v.setBackgroundColor(RED);
+                }
+                break;
+            case R.id.die_6:
+                if (dice.get(5).isIdle()){
+                    dice.get(5).setIdle(false);
+                    v.setBackgroundColor(0);
+                } else {
+                    dice.get(5).setIdle(true);
+                    v.setBackgroundColor(RED);
+                }
+                break;
+        }
+    }
+
+    private void setFirstRound(){
         round = 1;
         totalRound = 1;
+        for (ImageButton ib : images){
+            ib.setOnClickListener(this);
+        }
         setDice();
-
+        enableOptions();
+        roll.setBackgroundResource(R.drawable.button_design);
+        score.setBackgroundResource(R.drawable.disabled_button);
+        score.setClickable(false);
         roll.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                if (round > 2){
-                    chooseScore();
-                }
                 rollDice();
-                round++;
             }
         });
-
-        return view;
     }
 
     private void setDice(){
@@ -65,77 +390,72 @@ public class GameFragment extends Fragment {
         setImages();
     }
 
+    private void enableOptions(){
+        options.clear();
+        options.add("Low");
+        for (int i = 4; i < 13; i++){
+            options.add("" + i + "");
+        }
+    }
+
     private void rollDice(){
         for (Die die : dice){
             if(die.isIdle()){
-                return;
+                continue;
             } else {
                 int randomNumber = random.nextInt(6) + 1;
                 die.setValue(randomNumber);
             }
         }
         setImages();
+        round++;
+        if (round > 3){
+            newRound();
+        }
     }
 
     private void setImages(){
-        gl.removeAllViews();
-        gl2.removeAllViews();
         for (Die die : dice){
             int index = dice.indexOf(die);
-            ImageView image = new ImageView(mContext);
-            image.setPadding(10, 10, 10, 10);
             int res = getResources().getIdentifier("die" + die.getValue(), "drawable", "com.example.thirty");
-            image.setImageResource(res);
             switch(index){
-                case 0: case 1: case 2:
-                    gl.addView(image);
+                case 0:
+                    die1.setImageResource(res);
                     break;
-                case 3: case 4: case 5:
-                    gl2.addView(image);
+                case 1:
+                    die2.setImageResource(res);
+                    break;
+                case 2:
+                    die3.setImageResource(res);
+                    break;
+                case 3:
+                    die4.setImageResource(res);
+                    break;
+                case 4:
+                    die5.setImageResource(res);
+                    break;
+                case 5:
+                    die6.setImageResource(res);
                     break;
             }
-
         }
     }
 
-    private void chooseScore(){
-        if (totalRound > 2){
+    private void newRound(){
+        chooseScore();
+        round = 1;
+        totalRound++;
+        if (totalRound > 3){
             gameOver();
         }
-        showAlertDialog();
-        round = 0;
-        totalRound++;
     }
+
 
     private void gameOver(){
         MainActivity ma = (MainActivity) getActivity();
         ma.gameOver();
-        Toast.makeText(ma, "game over", Toast.LENGTH_SHORT).show();
     }
+    */
 
-    private void showAlertDialog() {
-        final MainActivity ma = (MainActivity) getActivity();
-        GridView gridView = new GridView(mContext);
-        String[] options = new String[13];
 
-        options[0] = "Low";
-        for (int i = 1; i < 13; i++){
-            options[i] = "" + i + "";
-        }
 
-        gridView.setAdapter(new ArrayAdapter<>(mContext, android.R.layout.simple_list_item_1, options));
-        gridView.setNumColumns(3);
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(ma, "position " + position, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setView(gridView);
-        builder.setTitle("Choose your score");
-        builder.show();
-
-    }
-}

@@ -7,29 +7,12 @@
     android:id="@+id/fragment_result"
     tools:context=".fragment.ResultFragment">
 
+
     <TextView
         android:id="@+id/scoreLow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/low"/>
-
-    <TextView
-        android:id="@+id/score1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/ones"/>
-
-    <TextView
-        android:id="@+id/score2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/twos"/>
-
-    <TextView
-        android:id="@+id/score3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/threes"/>
+        android:text="@string/low" />
 
     <TextView
         android:id="@+id/score4"
@@ -90,5 +73,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/total_score"/>
+
+    <Button
+        android:layout_marginTop="10dp"
+        android:id="@+id/newGame"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/button_design"
+        android:layout_height="wrap_content"
+        android:text="@string/new_game"/>
 
 </LinearLayout>
