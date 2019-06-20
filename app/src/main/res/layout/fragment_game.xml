@@ -2,98 +2,120 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginTop="80dp"
-    android:orientation="horizontal"
-    android:layout_centerHorizontal="true"
+    android:id="@+id/fragment_game"
     tools:context=".fragment.GameFragment">
 
-    <LinearLayout
-        android:id="@+id/row1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <GridLayout
+        android:id="@+id/gl"
         android:layout_centerHorizontal="true"
-        android:orientation="horizontal">
-
-        <ImageButton
-            android:id="@+id/die1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/red1"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp" />
-
-        <ImageButton
-            android:id="@+id/die2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/red2"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp" />
-
-        <ImageButton
-            android:id="@+id/die3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/red3"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/row2"
+        android:orientation="horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/row1"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/die_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:background="@null"/>
+
+        <ImageButton
+            android:id="@+id/die_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/die_1"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:background="@null"/>
+
+        <ImageButton
+            android:id="@+id/die_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/die_2"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:background="@null"/>
+
+    </GridLayout>
+
+    <GridLayout
+        android:id="@+id/gl2"
         android:layout_centerHorizontal="true"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_below="@+id/gl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <ImageButton
-            android:id="@+id/die4"
+            android:id="@+id/die_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/red4"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp" />
+            android:layout_below="@+id/die_1"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:background="@null"/>
 
         <ImageButton
-            android:id="@+id/die5"
+            android:id="@+id/die_5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/red5"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp" />
+            android:layout_below="@+id/die_2"
+            android:layout_toRightOf="@+id/die_4"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:background="@null"/>
 
         <ImageButton
-            android:id="@+id/die6"
+            android:id="@+id/die_6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/red6"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp" />
+            android:layout_below="@+id/die_3"
+            android:layout_toRightOf="@+id/die_5"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:background="@null"/>
 
-    </LinearLayout>
+    </GridLayout>
 
     <Button
         android:id="@+id/rollButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/row2"
+        android:layout_below="@+id/gl2"
         android:layout_centerHorizontal="true"
         android:text="@string/roll_dice" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/rollButton"
+        android:layout_centerHorizontal="true">
+    </Spinner>
+
+    <Button
+        android:id="@+id/scoreButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/spinner"
+        android:layout_below="@+id/rollButton"
+        android:layout_centerHorizontal="true"
+        android:text="@string/score_round" />
 
 
 </RelativeLayout>

@@ -1,5 +1,23 @@
 <resources>
     <string name="app_name">Thirty</string>
     <string name="roll_dice">Roll dice</string>
+    <string name="let_s_play">Let\'s play</string>
+    <string name="total_score">Total score: </string>
+    <string name="low">Low: </string>
+    <string name="ones">Ones: </string>
+    <string name="twos">Twos:</string>
+    <string name="threes">Threes:</string>
+    <string name="twelves">Twelves:</string>
+    <string name="elevens">Elevens:</string>
+    <string name="tens">Tens:</string>
+    <string name="nines">Nines:</string>
+    <string name="eights">Eights:</string>
+    <string name="sevens">Sevens:</string>
+    <string name="sixes">Sixes:</string>
+    <string name="fives">Fives:</string>
+    <string name="fours">Fours:</string>
+    <string name="score_round">Score round</string>
+    <string name="play_again">Play again</string>
+    <string name="new_game">New game</string>
 
 </resources>

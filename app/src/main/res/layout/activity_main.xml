@@ -13,12 +13,9 @@
         android:src="@drawable/logo"
         tools:ignore="MissingConstraints" />
 
-    <fragment
-        android:name="com.example.thirty.fragment.GameFragment"
-        android:id="@+id/fragment_place"
+    <FrameLayout
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </fragment>
+        android:layout_height="match_parent" />
 
 </LinearLayout>
