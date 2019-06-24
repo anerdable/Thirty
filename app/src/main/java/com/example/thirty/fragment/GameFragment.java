@@ -170,9 +170,9 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         }
         score.setClickable(true);
         dice = mGame.newRoll();
-        if (mGame.getRoll() == 3){
-            roll.setClickable(false);
-        }
+ //       if (mGame.getRoll() == 3){
+ //           roll.setClickable(false);
+ //       }
         setImages();
     }
 

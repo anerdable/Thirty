@@ -166,9 +166,9 @@ public class Game {
 
     public void newRound(){
         Log.d("Hej", "ny runda" + round);
-        for (Die die: dice){
-            die.reset();
-        }
+  //      for (Die die: dice){
+  //          die.reset();
+  //      }
         round++;
         roll = 0;
         if (round == 3){
