@@ -109,15 +109,7 @@ public class Counter {
     private int combineFromFour(int one, int two, int three, int four){
         int combination = 0;
         int target = parseInt(mTarget);
-        if (combineFromThree(one, two, three) == target){
-            combination = combineFromThree(one, two, three);
-        } else if (combineFromThree(one, two, four) == target){
-            combination = combineFromThree(one, two, four);
-        } else if (combineFromThree(one, three, four) == target){
-            combination = combineFromThree(one, three, four);
-        } else if (combineFromThree(two, three, four) == target){
-            combination = combineFromThree(two, three, four);
-        } else if (one + two + three + four == target){
+        if (one + two + three + four == target) {
             combination = one + two + three + four;
         }
         return combination;
@@ -126,17 +118,7 @@ public class Counter {
     private int combineFromFive(int one, int two, int three, int four, int five){
         int combination = 0;
         int target = parseInt(mTarget);
-        if (combineFromFour(one, two, three, four) == target){
-            combination = combineFromFour(one, two, three, four);
-        } else if (combineFromFour(one, two, three, five) == target){
-            combination =combineFromFour(one, two, three, five);
-        } else if (combineFromFour(one, two, four, five) == target){
-            combination = combineFromFour(one, two, four, five);
-        } else if (combineFromFour(one, three, four, five) == target){
-            combination = combineFromFour(one, three, four, five);
-        } else if (combineFromFour(two, three, four, five) == target){
-            combination =combineFromFour(two, three, four, five);
-        } else if (one + two + three + four + five == target){
+        if (one + two + three + four + five == target) {
             combination = one + two + three + four + five;
         }
         return combination;
@@ -145,19 +127,7 @@ public class Counter {
     private int combineFromSix(int one, int two, int three, int four, int five, int six){
         int combination = 0;
         int target = parseInt(mTarget);
-        if (combineFromFive(one, two, three, four, five) == target){
-            combination = combineFromFive(one, two, three, four, five);
-        } else if (combineFromFive(one, two, three, four, six) == target){
-            combination = combineFromFive(one, two, three, four, six);
-        } else if (combineFromFive(one, two, three, five, six) == target){
-            combination = combineFromFive(one, two, three, five, six);
-        } else if (combineFromFive(one, two, four, five, six) == target){
-            combination = combineFromFive(one, two, four, five, six);
-        } else if (combineFromFive(one, three, four, five, six) == target){
-            combination = combineFromFive(one, three, four, five, six);
-        } else if (combineFromFive(two, three, four, five, six) == target){
-            combination = combineFromFive(two, three, four, five, six);
-        } else if (one + two + three + four + five + six == target){
+        if (one + two + three + four + five + six == target) {
             combination = one + two + three + four + five + six;
         }
         return combination;
