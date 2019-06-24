@@ -126,11 +126,6 @@ public class Game {
     public void setScore(int index, int points){
         removeOption(index);
         newRound();
-        for (Die die : dice ){
-            if (die.isIdle()){
-                die.switchIdle();
-            }
-        }
         score[index] = points;
     }
 
@@ -171,6 +166,9 @@ public class Game {
 
     public void newRound(){
         Log.d("Hej", "ny runda" + round);
+        for (Die die: dice){
+            die.reset();
+        }
         round++;
         roll = 0;
         if (round == 3){
