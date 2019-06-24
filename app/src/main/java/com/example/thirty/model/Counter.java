@@ -17,25 +17,39 @@ public class Counter {
     }
 
     public int countValue(){
-        List<Integer> diceValue = new ArrayList<>();
-        for (Die die : mDice){
-            diceValue.add(die.getValue());
-        }
         switch(mScore){
             case "Choose score":
                 break;
             case "Low":
-                for (Integer i : diceValue){
-                    if (i < 4){
-                        result += i;
+                for (Die die : mDice){
+                    if (die.getValue() < 4){
+                        result += die.getValue();
                     }
                 }
                 break;
             case "4":
+                for (Die die : mDice){
+                    if (die.getValue() == 4){
+                        result += die.getValue();
+                        die.setUsed();
+                    }
+                }
                 break;
             case "5":
+                for (Die die : mDice){
+                    if (die.getValue() == 5){
+                        result += die.getValue();
+                        die.setUsed();
+                    }
+                }
                 break;
             case "6":
+                for (Die die : mDice){
+                    if (die.getValue() == 6){
+                        result += die.getValue();
+                        die.setUsed();
+                    }
+                }
                 break;
             case "7":
                 break;

@@ -1,5 +1,13 @@
 package com.example.thirty.activity;
 
+/**
+ * MainActivity
+ *
+ * Fills a part of the screen with the start fragment with the single purpose to let the player start the game by clicking a button.
+ * Toggles the game fragment where the interaction of the game takes place and later shows the result fragment when the game is finished.
+ *
+ */
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -17,6 +25,14 @@ public class MainActivity extends AppCompatActivity {
     final Fragment mResultFragment = new ResultFragment();
     final FragmentManager fm = this.getSupportFragmentManager();
 
+    /**
+     * onCreate
+     *
+     * Sets the first fragment as the start fragment to let the player initialise the game
+     *
+     * @param savedInstanceState
+     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,12 +40,24 @@ public class MainActivity extends AppCompatActivity {
         fm.beginTransaction().add(R.id.fragment_container, mStartFragment).commit();
     }
 
+    /**
+     * newGame
+     *
+     * Replaces the start fragment with the game fragment
+     */
+
     public void newGame(){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, mGameFragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
+    /**
+     * gameOver
+     *
+     * Replaces the game fragment with the result fragment after the game is over
+     */
 
     public void gameOver(){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

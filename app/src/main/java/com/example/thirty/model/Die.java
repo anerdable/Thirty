@@ -24,10 +24,10 @@ public class Die {
         this.used = false;
     }
 
-    public Die(int value, boolean idle, boolean used){
+    public Die(int value){
         this.value = value;
-        this.idle = idle;
-        this.used = used;
+        this.idle = false;
+        this.used = false;
     }
 
     public int getValue(){

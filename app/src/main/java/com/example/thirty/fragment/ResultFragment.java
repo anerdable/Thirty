@@ -2,6 +2,7 @@ package com.example.thirty.fragment;
 
 /*
  * ResultFragment
+ *
  * An Android implementation of the dice game "thirty throws".
  * Development of mobile applications
  * Umeå University, Summer Course 2019

@@ -2,6 +2,7 @@ package com.example.thirty.fragment;
 
 /*
  * GameFragment
+ *
  * An Android implementation of the dice game "thirty throws".
  * Development of mobile applications
  * Umeå University, Summer Course 2019
@@ -83,16 +84,20 @@ public class GameFragment extends Fragment implements View.OnClickListener {
      * setFirstRound
      *
      * Creates a new set of dice and passes it to a new Game.
-     * Updates the UI with correct image depending on the dice randomly assessed value.
+     * Updates the UI with correct image of each die's value (all 1 in the first set).
      *
      */
 
     private void setFirstRound(){
         for (int i = 0; i < 6; i++){
-            Die die = new Die();
+            Die die = new Die(1);
             dice.add(die);
         }
         setImages();
+        for (ImageButton ib : images){
+            ib.setClickable(false);
+        }
+        score.setClickable(false);
         mGame = new Game(dice);
         setSpinner();
     }
@@ -160,6 +165,10 @@ public class GameFragment extends Fragment implements View.OnClickListener {
      */
 
     private void roll(){
+        for (ImageButton ib : images) {
+            ib.setClickable(true);
+        }
+        score.setClickable(true);
         dice = mGame.newRoll();
         if (mGame.getRoll() == 3){
             roll.setClickable(false);
@@ -169,10 +178,20 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
     private void score(){
         int position = spinner.getSelectedItemPosition();
-        int score = new Counter(dice, mGame.getOptions().get(position)).getResult();
-        mGame.setScore(position, score);
-        mGame.removeOption(position);
-        mGame.newRound();
+        final MainActivity ma = (MainActivity) getActivity();
+        if (position == 0){
+            Toast.makeText(ma, "You have to choose a score", Toast.LENGTH_SHORT).show();
+        }  else {
+            int points = new Counter(dice, mGame.getOptions().get(position)).getResult();
+            mGame.setScore(position, points);
+            roll.setClickable(true);
+            score.setClickable(false);
+            spinner.setSelection(0);
+            for (ImageButton ib : images){
+                ib.setBackgroundColor(0);
+                ib.setClickable(false);
+            }
+        }
     }
 
 
@@ -246,13 +265,14 @@ public class GameFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 int position = spinner.getSelectedItemPosition();
-                int score = new Counter(dice, mGame.getOptions().get(position)).getResult();
-                Toast.makeText(ma, "poäng för " + mGame.getOptions().get(position) + " är " + score, Toast.LENGTH_SHORT).show();
+                int points = new Counter(dice, mGame.getOptions().get(position)).getResult();
+                if (position != 0){
+                    Toast.makeText(ma, "poäng för " + mGame.getOptions().get(position) + " är " + points, Toast.LENGTH_SHORT).show();
+                }
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                // TODO Auto-generated method stub
+
             }
         });
         }
