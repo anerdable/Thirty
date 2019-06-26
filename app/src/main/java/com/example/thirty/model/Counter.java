@@ -104,7 +104,7 @@ public class Counter {
 
 
         for (List<Integer> combination : combinations){
-            if (mValues.containsAll(combination)){
+            if (valid(combination)){
                 Log.d("ja", "den här funkar " + combination);
                 Log.d("koll", " här kollar vi värden "+ mValues);
                 toAdd += sumUpCombination(combination);
@@ -114,8 +114,13 @@ public class Counter {
             }
         }
 
-
         return toAdd;
+    }
+
+    private boolean valid(List<Integer> combination){
+        List<Integer> copy = new ArrayList<>();
+        //TODO - MATCHA ALLA ELEMENT I COMBINATION UNIKT MOT VÄRDEN I MVALUES
+        return combination.size() == copy.size();
     }
 
     private int sumUpCombination(List<Integer> combination){
