@@ -1,22 +1,29 @@
 package com.example.thirty.model;
 import android.util.Log;
-
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
+import static java.lang.Integer.decode;
 import static java.lang.Integer.parseInt;
 
 public class Counter {
 
     private String mTarget;
+    private List<Integer> mValues = new ArrayList<>();
     private List<Die> mDice;
+    private List<List<Integer>> allCombinations = new ArrayList<>();
     private int result;
-    private List<Die> unused = new ArrayList<>();
 
     public Counter(List<Die> dice, String target){
         mDice = dice;
         mTarget = target;
         this.result = 0;
+        for (Die die : mDice){
+            mValues.add(die.getValue());
+        }
         countValue();
     }
 
@@ -40,97 +47,91 @@ public class Counter {
             case "10":
             case "11":
             case "12":
-                findBestCombination();
+                List<Integer> values = new ArrayList<>();
+                for (Die die : mDice){
+                    values.add(die.getValue());
+                }
+                findAllCombinations(new ArrayList<>(values),parseInt(mTarget));
                 break;
-
         }
         return result;
     }
 
-    private int findBestCombination() {
-        int target = parseInt(mTarget);
-        for (Die die : mDice) {
-            if (die.getValue() == target) {
-                result += die.getValue();
-            } else if (die.getValue() < target) {
-                unused.add(die);
+    private void findAllCombinations(List<Integer> values, int target) {
+        findAllCombinationsRecursive(values, target, new ArrayList<Integer>());
+        result += findBestCombination(allCombinations);
+    }
+
+    private void findAllCombinationsRecursive(List<Integer> values, int target, List<Integer> combination) {
+        int toAdd = 0;
+
+        for (int x : combination) {
+            toAdd += x;
+        }
+
+        if (toAdd == target) {
+            allCombinations.add(combination);
+        }
+
+        if (toAdd > target) {
+            return;
+        }
+
+        for(int i = 0; i < values.size(); i++) {
+            List<Integer> remaining = new ArrayList<>();
+            int n = values.get(i);
+            for (int j = i+1; j < values.size(); j++) {
+                remaining.add(values.get(j));
+            }
+            List<Integer> copy = new ArrayList<>(combination);
+            copy.add(n);
+            findAllCombinationsRecursive(remaining, target, copy);
+        }
+    }
+    private int findBestCombination(List<List<Integer>> combinations) {
+        int toAdd = 0;
+
+        // Sort all the lists by length to count the shortest lists first, to use as many combinations as possible
+        Comparator<List<Integer>> comparator = new Comparator<List<Integer>>() {
+            @Override
+            public int compare(List<Integer> list1, List<Integer> list2) {
+                return list1.size() - list2.size();
+            }
+        };
+        Collections.sort(combinations, comparator);
+
+        Log.d("hoppsan", " det här är alla kombinationer " + combinations);
+
+
+        for (List<Integer> combination : combinations){
+            if (mValues.containsAll(combination)){
+                Log.d("ja", "den här funkar " + combination);
+                Log.d("koll", " här kollar vi värden "+ mValues);
+                toAdd += sumUpCombination(combination);
+                generateNewValues(combination);
+            } else {
+                break;
             }
         }
+
+
+        return toAdd;
+    }
+
+    private int sumUpCombination(List<Integer> combination){
         int toAdd = 0;
-        for (Die d : unused) {
-            Log.d("hej", "unused " + d.getValue() + " " + unused.size());
+        for (int i : combination){
+            toAdd += i;
         }
-        switch (unused.size()) {
-            case 0:
-            case 1:
-                break;
-            case 2:
-                toAdd = combineFromTwo(unused.get(0).getValue(), unused.get(1).getValue());
-                break;
-            case 3:
-                toAdd = combineFromThree(unused.get(0).getValue(), unused.get(1).getValue(), unused.get(2).getValue());
-                break;
-            case 4:
-                toAdd = combineFromFour(unused.get(0).getValue(), unused.get(1).getValue(), unused.get(2).getValue(), unused.get(3).getValue());
-                break;
-            case 5:
-                toAdd = combineFromFive(unused.get(0).getValue(), unused.get(1).getValue(), unused.get(2).getValue(), unused.get(3).getValue(), unused.get(4).getValue());
-                break;
-            case 6:
-                toAdd = combineFromSix(unused.get(0).getValue(), unused.get(1).getValue(), unused.get(2).getValue(), unused.get(3).getValue(), unused.get(4).getValue(), unused.get(5).getValue());
-                break;
-        }
-        return result += toAdd;
+        return toAdd;
     }
 
-    private int combineFromTwo(int one, int two){
-        int target = parseInt(mTarget);
-        if (one + two == target){
-            return one + two;
+    private void generateNewValues(List<Integer> combination){
+        Log.d("hej", combination +" kombinationen som nyss användes ");
+        for (Integer i : combination){
+            mValues.remove(i);
         }
-        return 0;
-    }
-
-    private int combineFromThree(int one, int two, int three){
-        int combination = 0;
-        int target = parseInt(mTarget);
-        if (combineFromTwo(one, two) == target){
-            combination = combineFromTwo(one, two);
-        } else if (combineFromTwo(one, three) == target) {
-            combination = combineFromTwo(one, three);
-        } else if (combineFromTwo(two, three) == target) {
-            combination = combineFromTwo(two, three);
-        } else if (one + two + three == target) {
-            combination = one + two + three;
-        }
-        return combination;
-    }
-
-    private int combineFromFour(int one, int two, int three, int four){
-        int combination = 0;
-        int target = parseInt(mTarget);
-        if (one + two + three + four == target) {
-            combination = one + two + three + four;
-        }
-        return combination;
-    }
-
-    private int combineFromFive(int one, int two, int three, int four, int five){
-        int combination = 0;
-        int target = parseInt(mTarget);
-        if (one + two + three + four + five == target) {
-            combination = one + two + three + four + five;
-        }
-        return combination;
-    }
-
-    private int combineFromSix(int one, int two, int three, int four, int five, int six){
-        int combination = 0;
-        int target = parseInt(mTarget);
-        if (one + two + three + four + five + six == target) {
-            combination = one + two + three + four + five + six;
-        }
-        return combination;
+        Log.d("hallå", " här är nya värden " + mValues);
     }
 
 

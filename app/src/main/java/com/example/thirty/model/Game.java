@@ -9,7 +9,10 @@ package com.example.thirty.model;
 
 import android.util.Log;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import static java.lang.Integer.parseInt;
 
 public class Game {
 
@@ -18,7 +21,7 @@ public class Game {
     private int[] score;
     private List<Die> dice;
     private List<String> options;
-    private boolean gameOver;
+    public boolean gameOver;
 
     /**
      * Constructor Game
@@ -31,6 +34,7 @@ public class Game {
         this.roll = 0;
         this.round = 0;
         this.score = new int[ROUNDS];
+        this.gameOver = false;
         enableOptions();
     }
 
@@ -67,7 +71,7 @@ public class Game {
      *               option is only available once during a game
      */
 
-    public void removeOption(int option){
+    public void removeOption(String option){
         options.remove(option);
     }
 
@@ -117,16 +121,22 @@ public class Game {
      * takes the score that the player was awarded and fills it into the array of the player's overall score
      * for the game.
      * calls the method to remove the option that was chosen by the player.
-     * calls the method to start a new round and resets any die that may be set idle from the previous round
+     * calls the method to start a new round.
      *
      * @param index takes the position that was chosen by the user of how they wish to score the current round
      * @param points takes that points that the player gets from the chosen option
      */
 
-    public void setScore(int index, int points){
+    public void setScore(String index, int points){
+        int i;
         removeOption(index);
         newRound();
-        score[index] = points;
+        if (index.equals("Low")){
+            i = 0;
+        } else {
+            i = parseInt(index) - 3;
+        }
+        score[i] = points;
     }
 
     /**
@@ -145,7 +155,6 @@ public class Game {
             newRound();
         }
         roll++;
-        Log.d("Hej", "nytt kast" + roll);
         for (Die die : dice){
             if (!die.isIdle()){
                 die.roll();
@@ -165,14 +174,14 @@ public class Game {
      */
 
     public void newRound(){
-        Log.d("Hej", "ny runda" + round);
-  //      for (Die die: dice){
-  //          die.reset();
-  //      }
-        round++;
-        roll = 0;
-        if (round == 3){
-            gameOver();
+        if (round == 2){
+            gameOver = true;
+        } else {
+            for (Die die: dice){
+ //               die.reset();
+            }
+            round++;
+            roll = 0;
         }
     }
 
@@ -183,16 +192,15 @@ public class Game {
      * @return
      */
 
-    public boolean gameOver(){
-        Log.d("hej", "game over");
+    public void gameOver(){
         roll = 0;
         round = 0;
         for (Integer i : score){
             i = 0;
         }
-        return gameOver;
+        for (Die die : dice){
+            die.reset();
+        }
     }
-
-
 
 }

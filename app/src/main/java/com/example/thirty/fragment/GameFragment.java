@@ -14,6 +14,7 @@ package com.example.thirty.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -168,21 +169,22 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         for (ImageButton ib : images) {
             ib.setClickable(true);
         }
+        spinner.setSelection(0);
         score.setClickable(true);
         dice = mGame.newRoll();
- //       if (mGame.getRoll() == 3){
- //           roll.setClickable(false);
- //       }
+//        if (mGame.getRoll() == 3){
+//            roll.setClickable(false);
+//        }
         setImages();
     }
 
     private void score(){
-        int position = spinner.getSelectedItemPosition();
+        String position = String.valueOf(spinner.getSelectedItem());
         final MainActivity ma = (MainActivity) getActivity();
-        if (position == 0){
+        if (position == "Choose score"){
             Toast.makeText(ma, "You have to choose a score", Toast.LENGTH_SHORT).show();
         }  else {
-            int points = new Counter(dice, mGame.getOptions().get(position)).getResult();
+            int points = new Counter(dice, position).getResult();
             mGame.setScore(position, points);
             roll.setClickable(true);
             score.setClickable(false);
@@ -190,6 +192,10 @@ public class GameFragment extends Fragment implements View.OnClickListener {
             for (ImageButton ib : images){
                 ib.setBackgroundColor(0);
                 ib.setClickable(false);
+            }
+            if (mGame.gameOver){
+                Log.d("hej", " game is over ");
+                gameOver();
             }
         }
     }
@@ -275,6 +281,19 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
             }
         });
+        }
+
+        private void gameOver(){
+            mGame.gameOver();
+            Log.d("hej", "game over steg 3");
+            roll.setText("See result");
+            final MainActivity ma = (MainActivity) getActivity();
+            roll.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ma.gameOver(mGame.getScore());
+                }
+            });
         }
 
     }

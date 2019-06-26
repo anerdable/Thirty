@@ -13,6 +13,7 @@ package com.example.thirty.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,26 +23,47 @@ import android.widget.TextView;
 import com.example.thirty.R;
 import com.example.thirty.activity.MainActivity;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class ResultFragment extends Fragment {
 
     private View view;
+    private int[] mParam1;
+    private List<TextView> textViews = new ArrayList<>();
     private Button newGame;
-    private TextView low, fours, fives, sixes, sevens, eights, nines, tens, elevens, twelves;
+    private TextView low, fours, fives, sixes, sevens, eights, nines, tens, elevens, twelves, totalScore;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
        view = inflater.inflate(R.layout.fragment_result, container, false);
-       low.findViewById(R.id.scoreLow);
-       fours.findViewById(R.id.score4);
-       fives.findViewById(R.id.score5);
-       sixes.findViewById(R.id.score6);
-       sevens.findViewById(R.id.score7);
-       eights.findViewById(R.id.score8);
-       nines.findViewById(R.id.score9);
-       tens.findViewById(R.id.score10);
-       elevens.findViewById(R.id.score11);
-       twelves.findViewById(R.id.score12);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getIntArray("params");
+        }
+       low = view.findViewById(R.id.scoreLow);
+       textViews.add(low);
+       fours = view.findViewById(R.id.score4);
+       textViews.add(fours);
+       fives = view.findViewById(R.id.score5);
+       textViews.add(fives);
+       sixes = view.findViewById(R.id.score6);
+       textViews.add(sixes);
+       sevens = view.findViewById(R.id.score7);
+       textViews.add(sevens);
+       eights = view.findViewById(R.id.score8);
+       textViews.add(eights);
+       nines = view.findViewById(R.id.score9);
+       textViews.add(nines);
+       tens = view.findViewById(R.id.score10);
+       textViews.add(tens);
+       elevens = view.findViewById(R.id.score11);
+       textViews.add(elevens);
+       twelves = view.findViewById(R.id.score12);
+       textViews.add(twelves);
+       totalScore = view.findViewById(R.id.totalScore);
+       getScore();
        newGame = view.findViewById(R.id.newGame);
        newGame.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -51,6 +73,24 @@ public class ResultFragment extends Fragment {
            }
        });
        return view;
+    }
+
+    private void getScore(){
+        Integer tot = 0;
+        low.append(" " + mParam1[0]);
+        fours.append(" " + mParam1[1]);
+        fives.append(" " + mParam1[2]);
+        sixes.append(" " + mParam1[3]);
+        sevens.append(" " + mParam1[4]);
+        eights.append(" " + mParam1[5]);
+        nines.append(" " + mParam1[6]);
+        tens.append(" " + mParam1[7]);
+        elevens.append(" " + mParam1[8]);
+        twelves.append(" " + mParam1[9]);
+        for (Integer i : mParam1){
+            tot += i;
+        }
+        totalScore.append(tot.toString());
     }
 
 }

@@ -18,6 +18,8 @@ import com.example.thirty.fragment.GameFragment;
 import com.example.thirty.fragment.ResultFragment;
 import com.example.thirty.fragment.StartFragment;
 
+import java.util.Arrays;
+
 public class MainActivity extends AppCompatActivity {
 
     final Fragment mStartFragment = new StartFragment();
@@ -59,7 +61,10 @@ public class MainActivity extends AppCompatActivity {
      * Replaces the game fragment with the result fragment after the game is over
      */
 
-    public void gameOver(){
+    public void gameOver(int[] result){
+        Bundle bundle = new Bundle();
+        bundle.putIntArray("params", result);
+        mResultFragment.setArguments(bundle);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, mResultFragment);
         transaction.addToBackStack(null);
