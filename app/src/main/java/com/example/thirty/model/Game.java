@@ -174,11 +174,11 @@ public class Game {
      */
 
     public void newRound(){
-        if (round == 2){
+        if (round == 9){
             gameOver = true;
         } else {
             for (Die die: dice){
- //               die.reset();
+                die.reset();
             }
             round++;
             roll = 0;

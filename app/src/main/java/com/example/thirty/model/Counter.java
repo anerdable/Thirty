@@ -3,10 +3,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
-
-import static java.lang.Integer.decode;
 import static java.lang.Integer.parseInt;
 
 public class Counter {
@@ -23,6 +20,9 @@ public class Counter {
         this.result = 0;
         for (Die die : mDice){
             mValues.add(die.getValue());
+        }
+        for (Die die : mDice){
+            die.setUsed(false);
         }
         countValue();
     }
@@ -102,25 +102,60 @@ public class Counter {
 
         Log.d("hoppsan", " det här är alla kombinationer " + combinations);
 
-
         for (List<Integer> combination : combinations){
-            if (valid(combination)){
-                Log.d("ja", "den här funkar " + combination);
-                Log.d("koll", " här kollar vi värden "+ mValues);
-                toAdd += sumUpCombination(combination);
-                generateNewValues(combination);
-            } else {
-                break;
+            while (mValues.size() > 0){
+                if (valid(combination)){
+                    Log.d("ja", "den här funkar " + combination);
+                    toAdd += sumUpCombination(combination);
+                    generateNewValues(combination);
+                } else {
+                    Log.d("nej", "den här funkar inte " + combination);
+                    break;
+                }
             }
         }
 
         return toAdd;
     }
 
-    private boolean valid(List<Integer> combination){
-        List<Integer> copy = new ArrayList<>();
-        //TODO - MATCHA ALLA ELEMENT I COMBINATION UNIKT MOT VÄRDEN I MVALUES
-        return combination.size() == copy.size();
+    private boolean valid(List<Integer> combination) {
+        boolean valid = false;
+        List<Integer> copyValues = new ArrayList<>(mValues);
+
+        if (!copyValues.containsAll(combination)) {
+            return false;
+        }
+
+        Collections.sort(copyValues);
+        Collections.sort(combination);
+
+        Log.d("hej", " det här är värdena " + copyValues);
+        Log.d("hej", " det här är kopian " + combination);
+
+        if (copyValues.size() > combination.size()) {
+            List<Integer> removed = new ArrayList<>();
+            for (Integer i : combination){
+                copyValues.remove(i);
+                removed.add(i);
+            } if (removed.size() + copyValues.size() > mValues.size()){
+                    valid = false;
+            } else {
+                valid = true;
+            }
+        } else if (copyValues.size() == combination.size()) {
+            if (combination.containsAll(copyValues)) {
+                for (int i = 0; i < combination.size(); i++) {
+                    if (combination.get(i) == copyValues.get(i)) {
+                        valid = true;
+                    } else {
+                        i++;
+                        valid = false;
+                    }
+                }
+            }
+        }
+
+        return valid;
     }
 
     private int sumUpCombination(List<Integer> combination){
@@ -139,6 +174,14 @@ public class Counter {
         Log.d("hallå", " här är nya värden " + mValues);
     }
 
+    private List<Integer> getRemovedValues(List<Integer> combination){
+        List<Integer> copy = new ArrayList<>(mValues);
+        List<Integer> removed = new ArrayList<>();
+        for (Integer i : combination){
+            copy.remove(i);
+        }
+        return removed;
+    }
 
     public int getResult(){
         return result;

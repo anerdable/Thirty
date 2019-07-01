@@ -50,14 +50,18 @@ public class Die {
         idle = !idle;
     }
 
-    public void setUsed(){
-        used = true;
+    public void setUsed(boolean newUsed){
+        used = newUsed;
     }
 
     public void reset(){
         value = 0;
         idle = false;
         used = false;
+    }
+
+    public String toString(){
+        return value + " " + used;
     }
 
 }

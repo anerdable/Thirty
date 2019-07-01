@@ -7,6 +7,9 @@ package com.example.thirty.fragment;
  * Development of mobile applications
  * Umeå University, Summer Course 2019
  *
+ * This is a controller class for the game view. It reacts to the player's interactions with the game,
+ * updates the game model class and changes the view objects depending on the model class' updates.
+ *
  * Paula D'Cruz
  *
  */
@@ -24,7 +27,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.example.thirty.R;
 import com.example.thirty.activity.MainActivity;
 import com.example.thirty.model.Counter;
@@ -44,11 +46,28 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     private List<Die> dice = new ArrayList<>();
     private Context mContext;
 
+    /**
+     * onAttach
+     *
+     *
+     *
+     * @param context
+     */
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
     }
+
+    /**
+     * onCreateView
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -102,6 +121,15 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         mGame = new Game(dice);
         setSpinner();
     }
+
+    /**
+     * onClick
+     *
+     * generic onClick method that is used for all user interactions with the view.
+     * Reacts differently based on what element was clicked.
+     *
+     * @param v takes the view as a parameter to be able to identify the element that was clicked.
+     */
 
     @Override
     public void onClick(View v) {
@@ -172,11 +200,23 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         spinner.setSelection(0);
         score.setClickable(true);
         dice = mGame.newRoll();
-//        if (mGame.getRoll() == 3){
-//            roll.setClickable(false);
-//        }
+        if (mGame.getRoll() == 3){
+            roll.setClickable(false);
+        }
         setImages();
     }
+
+    /**
+     *
+     * score
+     *
+     * takes the element from the spinner that was chosen by the user and calculates the score via
+     * the counter class. Sends the data to the game class to update the score.
+     * Toggles which buttons are clickable and resets the spinner to the first selection.
+     * changes the background colours for the dice.
+     * checks if the game is over and if it is, calls the method to finish the game.
+     *
+     */
 
     private void score(){
         String position = String.valueOf(spinner.getSelectedItem());
@@ -262,6 +302,15 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    /**
+     * setSpinner
+     *
+     * updates the spinner view based on the users choice. Calculates the score each time the user
+     * selects a spinner item to give them an indication of how many points they'll get from each option, but only
+     * shows it as a Toast message. the user have to press score to actually receive the points.
+     *
+     */
+
     private void setSpinner() {
         List<String> options = mGame.getOptions();
         final MainActivity ma = (MainActivity) getActivity();
@@ -276,6 +325,13 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                     Toast.makeText(ma, "poäng för " + mGame.getOptions().get(position) + " är " + points, Toast.LENGTH_SHORT).show();
                 }
             }
+
+            /**
+             * mandatory call, not used.
+             *
+             * @param parent
+             */
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -283,9 +339,16 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         });
         }
 
-        private void gameOver(){
+    /**
+     *
+     * gameOver
+     *
+     * when the game is over, this method is called. Changes the text of the "roll" button to "see result", and
+     * changes the click listener to call the main activity's gameOver method. sends the score of the game to main activity.
+     *
+     */
+    private void gameOver(){
             mGame.gameOver();
-            Log.d("hej", "game over steg 3");
             roll.setText("See result");
             final MainActivity ma = (MainActivity) getActivity();
             roll.setOnClickListener(new View.OnClickListener() {
