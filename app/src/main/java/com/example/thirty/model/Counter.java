@@ -21,9 +21,6 @@ public class Counter {
         for (Die die : mDice){
             mValues.add(die.getValue());
         }
-        for (Die die : mDice){
-            die.setUsed(false);
-        }
         countValue();
     }
 
@@ -65,8 +62,8 @@ public class Counter {
     private void findAllCombinationsRecursive(List<Integer> values, int target, List<Integer> combination) {
         int toAdd = 0;
 
-        for (int x : combination) {
-            toAdd += x;
+        for (int i : combination) {
+            toAdd += i;
         }
 
         if (toAdd == target) {
@@ -172,15 +169,6 @@ public class Counter {
             mValues.remove(i);
         }
         Log.d("hallå", " här är nya värden " + mValues);
-    }
-
-    private List<Integer> getRemovedValues(List<Integer> combination){
-        List<Integer> copy = new ArrayList<>(mValues);
-        List<Integer> removed = new ArrayList<>();
-        for (Integer i : combination){
-            copy.remove(i);
-        }
-        return removed;
     }
 
     public int getResult(){

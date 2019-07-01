@@ -7,10 +7,11 @@ package com.example.thirty.fragment;
  * Development of mobile applications
  * Umeå University, Summer Course 2019
  *
+ * Paula D'Cruz
+ *
  * This is a controller class for the game view. It reacts to the player's interactions with the game,
  * updates the game model class and changes the view objects depending on the model class' updates.
  *
- * Paula D'Cruz
  *
  */
 

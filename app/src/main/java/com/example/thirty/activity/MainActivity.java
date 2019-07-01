@@ -3,6 +3,12 @@ package com.example.thirty.activity;
 /**
  * MainActivity
  *
+ * An Android implementation of the dice game "thirty throws".
+ * Development of mobile applications
+ * Umeå University, Summer Course 2019
+ *
+ * Paula D'Cruz
+ *
  * Fills a part of the screen with the start fragment with the single purpose to let the player start the game by clicking a button.
  * Toggles the game fragment where the interaction of the game takes place and later shows the result fragment when the game is finished.
  *
@@ -56,9 +62,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     *
      * gameOver
      *
-     * Replaces the game fragment with the result fragment after the game is over
+     * Replaces the game fragment with the result fragment after the game is over.
+     *
+     * @param result receives the result of the game as an array that is sent in a bundle to the new fragment.
      */
 
     public void gameOver(int[] result){

@@ -13,19 +13,21 @@ package com.example.thirty.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.example.thirty.R;
 import com.example.thirty.activity.MainActivity;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+
+/**
+ *
+ * This fragment updates the result view.
+ *
+ */
 
 public class ResultFragment extends Fragment {
 
@@ -35,6 +37,17 @@ public class ResultFragment extends Fragment {
     private Button newGame;
     private TextView low, fours, fives, sixes, sevens, eights, nines, tens, elevens, twelves, totalScore;
 
+
+    /**
+     *onCreateView
+     *
+     *
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -74,6 +87,16 @@ public class ResultFragment extends Fragment {
        });
        return view;
     }
+
+    /**
+     * getScore
+     *
+     * takes the score from the bundle that was taken in as a parameter and appends the result to the correct
+     * TextView element on the fragment view.
+     *
+     * Calculates the total score of the game and appends that number to the last TextView for total result.
+     *
+     */
 
     private void getScore(){
         Integer tot = 0;

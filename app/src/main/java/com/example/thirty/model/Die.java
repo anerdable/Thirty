@@ -16,52 +16,75 @@ public class Die {
 
     private Random random = new Random();
     private int value;
-    private boolean idle, used;
+    private boolean idle;
 
-    public Die(){
-        this.value = random.nextInt(6) + 1;
-        this.idle = false;
-        this.used = false;
-    }
+    /**
+     * Die
+     *
+     * constructor to create a new die object.
+     *
+     * @param value is always 1 because the constructor creates six dice with value 1 at the beginning of a game.
+     */
 
     public Die(int value){
         this.value = value;
         this.idle = false;
-        this.used = false;
     }
+
+    /**
+     * getValue
+     *
+     * @return the value of the die. used when calculating the score of the game.
+     */
 
     public int getValue(){
         return value;
     }
 
+    /**
+     * isIdle
+     *
+     * @return whether or not the die is set to idle (meaning it won't change value the next time the player
+     * presses roll)
+     */
+
     public boolean isIdle(){
         return idle;
     }
 
-    public boolean isUsed(){
-        return used;
-    }
+    /**
+     * roll
+     *
+     * gives the die a new random value between 1 - 6.
+     *
+     */
 
     public void roll(){
         value = random.nextInt(6) + 1;
     }
 
+    /**
+     * switchIdle
+     *
+     * toggle the idle state of the die
+     * used when clicking a die, and when a round is over.
+     */
+
     public void switchIdle(){
         idle = !idle;
     }
 
-    public void setUsed(boolean newUsed){
-        used = newUsed;
-    }
+    /**
+     * reset
+     *
+     * sets the value of the die to 0 and it's idle state to false.
+     * used when the game is over.
+     *
+     */
 
     public void reset(){
         value = 0;
         idle = false;
-        used = false;
-    }
-
-    public String toString(){
-        return value + " " + used;
     }
 
 }

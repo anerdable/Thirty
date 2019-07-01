@@ -7,11 +7,8 @@ package com.example.thirty.model;
  *
  */
 
-import android.util.Log;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
 import static java.lang.Integer.parseInt;
 
 public class Game {
@@ -24,7 +21,9 @@ public class Game {
     public boolean gameOver;
 
     /**
-     * Constructor Game
+     * Game
+     *
+     * constructor used to create a new game.
      *
      * @param newDice, takes in a set consisting of 6 dice, since the game requires it.
      */
