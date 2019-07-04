@@ -50,9 +50,9 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     /**
      * onAttach
      *
+     * called once the fragment is associated with its activity.
      *
-     *
-     * @param context
+     * @param context the context that the fragment can be found in.
      */
 
     @Override
@@ -64,9 +64,12 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     /**
      * onCreateView
      *
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
+     * this method sets up the entire game view. it constructs all IU artifacts such as ImageButtons, Buttons for rolling
+     * and scoring and the spinner to choose point target from.
+     *
+     * @param inflater the layoutInflator object that is used to inflate view to the fragment
+     * @param container If non-null, this is the parent view that the fragment's UI should be attached to.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state.
      * @return
      */
 

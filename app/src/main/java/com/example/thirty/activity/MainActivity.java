@@ -24,8 +24,6 @@ import com.example.thirty.fragment.GameFragment;
 import com.example.thirty.fragment.ResultFragment;
 import com.example.thirty.fragment.StartFragment;
 
-import java.util.Arrays;
-
 public class MainActivity extends AppCompatActivity {
 
     final Fragment mStartFragment = new StartFragment();

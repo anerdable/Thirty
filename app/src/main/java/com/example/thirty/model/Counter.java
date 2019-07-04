@@ -14,6 +14,16 @@ public class Counter {
     private List<List<Integer>> allCombinations = new ArrayList<>();
     private int result;
 
+    /**
+     * Counter
+     *
+     * constructor to make a new counter
+     *
+     * @param dice takes the set of dice that the player currently has, to calculate the score from
+     * @param target takes the target score that the user has chosen from the spinner, to decide which
+     *               score the counter is trying to reach
+     */
+
     public Counter(List<Die> dice, String target){
         mDice = dice;
         mTarget = target;
@@ -23,6 +33,15 @@ public class Counter {
         }
         countValue();
     }
+
+    /**
+     * countValue
+     *
+     * this is the first method that is being called, it's a switch case that calls different methods
+     * depending on which score the player chose.
+     *
+     * @return the score that the player can achieve from this set of dice, for the chosen target score
+     */
 
     public int countValue(){
         switch(mTarget){
@@ -54,10 +73,33 @@ public class Counter {
         return result;
     }
 
+    /**
+     * findAllCombinations
+     *
+     * this is a helper method that will continue sending data to a new method.
+     * it will send the data retrieved from the first method to a second method to calculate the result of the round
+     *
+     * @param values these are the values of the dice stores as Integers in an arrayList, instead of Die objects.
+     *               The reason for this is to make it easier to count with Integers rather than calling the
+     *               getValue() method from the Die object every time you need the number it represents.
+     * @param target this is the integer target number that the player is trying to reach as many points as possible of
+     */
+
     private void findAllCombinations(List<Integer> values, int target) {
         findAllCombinationsRecursive(values, target, new ArrayList<Integer>());
         result += findBestCombination(allCombinations);
     }
+
+    /**
+     * findAllCombinationsRecursive
+     *
+     * a recursive method to find all combinations that can be made with the set of dice that the player
+     * is currently displayed with.
+     *
+     * @param values an arrayList containing the values of the dice set
+     * @param target the target score that the player chose in the spinner
+     * @param combination this is a list where each combination will be stored each time the method is called. All combinations are then added to a list allCombinations.
+     */
 
     private void findAllCombinationsRecursive(List<Integer> values, int target, List<Integer> combination) {
         int toAdd = 0;
@@ -85,6 +127,17 @@ public class Counter {
             findAllCombinationsRecursive(remaining, target, copy);
         }
     }
+
+    /**
+     * findBestCombination
+     *
+     * after all combinations have been found from the set of dice, it's time to choose the best ones, i.e the ones
+     * using the least amount of dice (so you can use as many combinations as possible). This method makes sure
+     * each die is only used once.
+     *
+     * @param combinations these are all combinations that were found in the previous method findAllCombinations
+     * @return the integer points that are achieved from using the best (shortest) combinations, using each die only once.
+     */
     private int findBestCombination(List<List<Integer>> combinations) {
         int toAdd = 0;
 
@@ -115,6 +168,16 @@ public class Counter {
         return toAdd;
     }
 
+    /**
+     * valid
+     *
+     * this is a helper method to check whether a combination is valid or not. It checks to see that all values
+     * used in the combination are unused values.
+     *
+     * @param combination the combination to check (a list containing the integers used in the combination)
+     * @return true or false depending on if it's a valid combination or not
+     */
+
     private boolean valid(List<Integer> combination) {
         boolean valid = false;
         List<Integer> copyValues = new ArrayList<>(mValues);
@@ -125,9 +188,6 @@ public class Counter {
 
         Collections.sort(copyValues);
         Collections.sort(combination);
-
-        Log.d("hej", " det här är värdena " + copyValues);
-        Log.d("hej", " det här är kopian " + combination);
 
         if (copyValues.size() > combination.size()) {
             List<Integer> removed = new ArrayList<>();
@@ -155,6 +215,15 @@ public class Counter {
         return valid;
     }
 
+    /**
+     * sumUpCombination
+     *
+     * from this method all values in a combination is added to an int holder representing the final score of the combination
+     *
+     * @param combination takes the combination of which you want to calculate the score from
+     * @return an integer holding a value that is all values of the combination added together.
+     */
+
     private int sumUpCombination(List<Integer> combination){
         int toAdd = 0;
         for (int i : combination){
@@ -163,6 +232,15 @@ public class Counter {
         return toAdd;
     }
 
+    /**
+     * generateNewValues
+     *
+     * each time a combination has been used, this method is called to update a list to check which dice are
+     * left to be used to calculate combinations from
+     *
+     * @param combination this is the combination that has just been used, and those dice are removed so they can't be used again
+     */
+
     private void generateNewValues(List<Integer> combination){
         Log.d("hej", combination +" kombinationen som nyss användes ");
         for (Integer i : combination){
@@ -170,6 +248,16 @@ public class Counter {
         }
         Log.d("hallå", " här är nya värden " + mValues);
     }
+
+    /**
+     * getResult
+     *
+     * a getter method to get the result from when a Counter object has calculated the result of a set of dice.
+     * Used when displaying how many points a user can achieve from choosing a value from the spinner.
+     * The result is displayed in a Toast message and later in the result fragment.
+     *
+     * @return the result of the calculations from the set of dice and the target score the player wanted to schieve.
+     */
 
     public int getResult(){
         return result;

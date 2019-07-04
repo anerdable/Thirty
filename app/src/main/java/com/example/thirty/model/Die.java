@@ -31,6 +31,7 @@ public class Die {
         this.idle = false;
     }
 
+
     /**
      * getValue
      *

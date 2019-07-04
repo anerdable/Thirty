@@ -87,7 +87,7 @@ public class Game {
     /**
      * getRound
      *
-     * @return what round the player is on in the game
+     * @return what round the player is on in the game, currently never used.
      */
 
     public int getRound(){
@@ -107,7 +107,7 @@ public class Game {
     /**
      * getDice
      *
-     * @return the dice that are being used in the game
+     * @return the dice that are being used in the game, currently never used
      */
 
     public List<Die> getDice(){
@@ -185,10 +185,11 @@ public class Game {
     }
 
     /**
-     *
      * gameOver
      *
-     * @return
+     * when a game is over, this method is called. It sets the roll and round to 0, and all dice values to 0.
+     * If any die was set as idle, it will be reset to non-idle.
+     *
      */
 
     public void gameOver(){

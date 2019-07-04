@@ -41,12 +41,13 @@ public class ResultFragment extends Fragment {
     /**
      *onCreateView
      *
+     * this method sets up the entire result view. it constructs all IU artifacts such as the
+     * TextViews in which the result is presented and a button to start a new game.
      *
-     *
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return
+     * @param inflater the layoutInflator object that is used to inflate view to the fragment
+     * @param container If non-null, this is the parent view that the fragment's UI should be attached to.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state as given here.
+     * @return the view for the fragment's UI.
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
