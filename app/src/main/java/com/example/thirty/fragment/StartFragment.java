@@ -1,6 +1,10 @@
-package com.example.thirty.fragment;
 
 /*
+
+package com.example.thirty.fragment;
+
+här ska starttaggen egentligen ligga för kommentaren
+
  * StartFragment
  * An Android implementation of the dice game "thirty throws".
  * Development of mobile applications
@@ -8,7 +12,8 @@ package com.example.thirty.fragment;
  *
  * Paula D'Cruz
  *
- */
+
+ här ska sluttaggen egentligen ligga för kommentaren
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -24,6 +29,7 @@ import com.example.thirty.activity.MainActivity;
 public class StartFragment extends Fragment {
 
     private Button ok;
+    private final static String TAG = "StartFragment";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,3 +46,5 @@ public class StartFragment extends Fragment {
         return view;
     }
 }
+
+*/

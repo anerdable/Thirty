@@ -46,6 +46,8 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     private List<ImageButton> images = new ArrayList<>();
     private List<Die> dice = new ArrayList<>();
     private Context mContext;
+    private final static String TAG = "GameFragment";
+    private static final String GAME_PARCEL = "com.example.thirty.model.game";
 
     /**
      * onAttach
@@ -59,6 +61,23 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
+    }
+
+    /**
+     * onCreate
+     *
+     * Handles restoring state by receiving parcelable
+     * data and extras when available.
+     * @param savedInstanceState Bundle: saved state
+     */
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+
+        if(savedInstanceState != null) {
+            mGame = savedInstanceState.getParcelable(GAME_PARCEL);
+        }
+
     }
 
     /**
@@ -102,6 +121,20 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         images.add(die6);
         setFirstRound();
         return view;
+    }
+
+    /**
+     * onSaveInstanceState
+     *
+     * mGame is prepared here for transient storage in a bundle on
+     * configuration change such as rotation.
+     * @param outState bundle in which to place saved state.
+     */
+
+    @Override
+    public void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(GAME_PARCEL, mGame);
     }
 
     /**
