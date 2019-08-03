@@ -10,13 +10,17 @@ package com.example.thirty.model;
  *
  */
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Random;
 
-public class Die {
+public class Die implements Parcelable {
 
     private Random random = new Random();
     private int value;
     private boolean idle;
+    private final static String TAG = "Die";
 
     /**
      * Die
@@ -31,6 +35,37 @@ public class Die {
         this.idle = false;
     }
 
+    /**
+     * Die
+     *
+     * protected constructor to recreate states using parcels for transient state storage.
+     *
+     * @param in contains the object that should be recreated
+     */
+
+    protected Die(Parcel in) {
+        value = in.readInt();
+        idle = in.readInt() == 1;
+    }
+
+    /**
+     * Parcelable.Creator
+     *
+     * static method that calls the protected constructor to recreate state.
+     *
+     */
+
+    public static final Creator<Die> CREATOR = new Creator<Die>() {
+        @Override
+        public Die createFromParcel(Parcel in) {
+            return new Die(in);
+        }
+
+        @Override
+        public Die[] newArray(int size) {
+            return new Die[size];
+        }
+    };
 
     /**
      * getValue
@@ -88,4 +123,31 @@ public class Die {
         idle = false;
     }
 
+    /**
+     * describeContents
+     *
+     * mandatory method for Parcelable, not used
+     *
+     * @return 0, not used
+     */
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    /**
+     * writeToParcel
+     *
+     * this method writes round, roll and score into a parcel.
+     *
+     * @param dest this is where all data is being written to
+     * @param flags
+     */
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(value);
+        dest.writeInt((idle ? 1 : 0));
+    }
 }

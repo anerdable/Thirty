@@ -46,6 +46,8 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     private List<ImageButton> images = new ArrayList<>();
     private List<Die> dice = new ArrayList<>();
     private Context mContext;
+    private final static String TAG = "GameFragment";
+    private static final String GAME_PARCEL = "com.example.thirty.model.game";
 
     /**
      * onAttach
@@ -59,6 +61,30 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
+    }
+
+    /**
+     * onCreate
+     *
+     * Handles restoring state by receiving parcelable
+     * data and extras when available.
+     * @param savedInstanceState Bundle: saved state
+     */
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+
+        if(savedInstanceState != null) {
+            mGame = savedInstanceState.getParcelable(GAME_PARCEL);
+            dice = mGame.getDice();
+        } else {
+            for (int i = 0; i < 6; i++){
+                Die die = new Die(1);
+                dice.add(die);
+            }
+            mGame = new Game(dice);
+        }
+
     }
 
     /**
@@ -100,8 +126,23 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         images.add(die4);
         images.add(die5);
         images.add(die6);
-        setFirstRound();
+        setRound();
         return view;
+    }
+
+    /**
+     * onSaveInstanceState
+     *
+     * mGame is prepared here for transient storage in a bundle on
+     * configuration change such as rotation.
+     * @param outState bundle in which to place saved state.
+     */
+
+    @Override
+    public void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+        Log.d(TAG, "onSaveInstanceState called" + mGame);
+        outState.putParcelable(GAME_PARCEL, mGame);
     }
 
     /**
@@ -112,17 +153,16 @@ public class GameFragment extends Fragment implements View.OnClickListener {
      *
      */
 
-    private void setFirstRound(){
-        for (int i = 0; i < 6; i++){
-            Die die = new Die(1);
-            dice.add(die);
-        }
+    private void setRound(){
         setImages();
         for (ImageButton ib : images){
-            ib.setClickable(false);
+            if (mGame.getRoll() == 0){
+                ib.setClickable(false);
+            }
         }
-        score.setClickable(false);
-        mGame = new Game(dice);
+        if (mGame.getRoll() == 0){
+            score.setClickable(false);
+        }
         setSpinner();
     }
 

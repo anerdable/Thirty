@@ -13,6 +13,7 @@ public class Counter {
     private List<Die> mDice;
     private List<List<Integer>> allCombinations = new ArrayList<>();
     private int result;
+    private final static String TAG = "Counter";
 
     /**
      * Counter

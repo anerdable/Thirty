@@ -7,11 +7,13 @@ package com.example.thirty.model;
  *
  */
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import java.util.ArrayList;
 import java.util.List;
 import static java.lang.Integer.parseInt;
 
-public class Game {
+public class Game implements Parcelable {
 
     private static final int ROUNDS = 10;
     private int roll, round;
@@ -19,6 +21,7 @@ public class Game {
     private List<Die> dice;
     private List<String> options;
     public boolean gameOver;
+    private final static String TAG = "Game";
 
     /**
      * Game
@@ -36,6 +39,43 @@ public class Game {
         this.gameOver = false;
         enableOptions();
     }
+
+    /**
+     * Game
+     *
+     * protected constructor to recreate states using parcels for transient state storage.
+     *
+     * @param in contains the object that should be recreated
+     */
+
+    protected Game(Parcel in) {
+        roll = in.readInt();
+        round = in.readInt();
+        dice = new ArrayList<>();
+        in.readTypedList(dice, Die.CREATOR);
+        score = in.createIntArray();
+        options = in.createStringArrayList();
+        gameOver = in.readInt() == 1;
+    }
+
+    /**
+     * Parcelable.Creator
+     *
+     * static method that calls the protected constructor to recreate state.
+     *
+     */
+
+    public static final Creator<Game> CREATOR = new Creator<Game>() {
+        @Override
+        public Game createFromParcel(Parcel in) {
+            return new Game(in);
+        }
+
+        @Override
+        public Game[] newArray(int size) {
+            return new Game[size];
+        }
+    };
 
     /**
      * enableOptions
@@ -173,7 +213,7 @@ public class Game {
      */
 
     public void newRound(){
-        if (round == 9){
+        if (round == 1){
             gameOver = true;
         } else {
             for (Die die: dice){
@@ -201,6 +241,41 @@ public class Game {
         for (Die die : dice){
             die.reset();
         }
+    }
+
+    /**
+     * describeContents
+     *
+     * mandatory method for Parcelable, not used
+     *
+     * @return 0, not used
+     */
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    /**
+     * writeToParcel
+     *
+     * this method writes round, roll and score into a parcel.
+     *
+     * @param dest this is where all data is being written to
+     * @param flags
+     */
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(round);
+        dest.writeInt(roll);
+        dest.writeTypedList(dice);
+        dest.writeIntArray(score);
+        dest.writeInt(gameOver ? 1 : 0);
+    }
+
+    public String toString(){
+        return round + " " + dice;
     }
 
 }

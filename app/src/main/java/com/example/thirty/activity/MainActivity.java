@@ -19,31 +19,93 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+
 import com.example.thirty.R;
 import com.example.thirty.fragment.GameFragment;
 import com.example.thirty.fragment.ResultFragment;
-import com.example.thirty.fragment.StartFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    final Fragment mStartFragment = new StartFragment();
     final Fragment mGameFragment = new GameFragment();
     final Fragment mResultFragment = new ResultFragment();
     final FragmentManager fm = this.getSupportFragmentManager();
+    private final static String TAG = "MainActivity";
 
     /**
      * onCreate
      *
-     * Sets the first fragment as the start fragment to let the player initialise the game
+     * Lifecycle method that loads the correct fragment into the fragment container
      *
-     * @param savedInstanceState
+     * @param savedInstanceState saved state
      */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        fm.beginTransaction().add(R.id.fragment_container, mStartFragment).commit();
+
+        Fragment fragment;
+
+        FragmentManager fm = getSupportFragmentManager();
+        if (savedInstanceState != null){
+            fragment = fm.getFragment(savedInstanceState, String.valueOf(R.id.fragment_container));
+        } else {
+            fragment = fm.findFragmentById(R.id.fragment_container);
+        }
+
+        if (fragment == null) {
+            fm.beginTransaction()
+                    .add(R.id.fragment_container, mGameFragment)
+                    .commit();
+        }
+        Log.d(TAG, "onCreate() called");
+    }
+
+    /**
+     * onSaveInstanceState
+     *
+     * Stores transient bundle data from a fragment
+     *
+     * @param outState bundle where the saved state is stored
+     */
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment fragment = fm.findFragmentById(R.id.fragment_container);
+        getSupportFragmentManager().putFragment(outState,String.valueOf(R.id.fragment_container), fragment);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart() called");
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        Log.d(TAG, "onResume() called");
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        Log.d(TAG, "onDestroy() called");
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        Log.d(TAG, "onPause() called");
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        Log.d(TAG, "onStop() called");
     }
 
     /**
@@ -53,9 +115,12 @@ public class MainActivity extends AppCompatActivity {
      */
 
     public void newGame(){
+        for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+            fm.popBackStack();
+        }
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, mGameFragment);
-        transaction.addToBackStack(null);
+        transaction.addToBackStack("game");
         transaction.commit();
     }
 
@@ -74,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
         mResultFragment.setArguments(bundle);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, mResultFragment);
-        transaction.addToBackStack(null);
+        transaction.addToBackStack("result");
         transaction.commit();
     }
 }
