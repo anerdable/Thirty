@@ -115,7 +115,9 @@ public class MainActivity extends AppCompatActivity {
      */
 
     public void newGame(){
-        fm.popBackStack();
+        for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+            fm.popBackStack();
+        }
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, mGameFragment);
         transaction.addToBackStack("game");

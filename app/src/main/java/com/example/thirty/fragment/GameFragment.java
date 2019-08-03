@@ -76,6 +76,13 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
         if(savedInstanceState != null) {
             mGame = savedInstanceState.getParcelable(GAME_PARCEL);
+            dice = mGame.getDice();
+        } else {
+            for (int i = 0; i < 6; i++){
+                Die die = new Die(1);
+                dice.add(die);
+            }
+            mGame = new Game(dice);
         }
 
     }
@@ -119,7 +126,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         images.add(die4);
         images.add(die5);
         images.add(die6);
-        setFirstRound();
+        setRound();
         return view;
     }
 
@@ -134,6 +141,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onSaveInstanceState(Bundle outState){
         super.onSaveInstanceState(outState);
+        Log.d(TAG, "onSaveInstanceState called" + mGame);
         outState.putParcelable(GAME_PARCEL, mGame);
     }
 
@@ -145,17 +153,16 @@ public class GameFragment extends Fragment implements View.OnClickListener {
      *
      */
 
-    private void setFirstRound(){
-        for (int i = 0; i < 6; i++){
-            Die die = new Die(1);
-            dice.add(die);
-        }
+    private void setRound(){
         setImages();
         for (ImageButton ib : images){
-            ib.setClickable(false);
+            if (mGame.getRoll() == 0){
+                ib.setClickable(false);
+            }
         }
-        score.setClickable(false);
-        mGame = new Game(dice);
+        if (mGame.getRoll() == 0){
+            score.setClickable(false);
+        }
         setSpinner();
     }
 

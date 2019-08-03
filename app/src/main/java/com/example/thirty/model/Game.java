@@ -9,7 +9,6 @@ package com.example.thirty.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import java.util.ArrayList;
 import java.util.List;
 import static java.lang.Integer.parseInt;
@@ -273,6 +272,10 @@ public class Game implements Parcelable {
         dest.writeTypedList(dice);
         dest.writeIntArray(score);
         dest.writeInt(gameOver ? 1 : 0);
+    }
+
+    public String toString(){
+        return round + " " + dice;
     }
 
 }
