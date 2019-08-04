@@ -19,14 +19,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-
 import com.example.thirty.R;
 import com.example.thirty.fragment.GameFragment;
 import com.example.thirty.fragment.ResultFragment;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Fragment mGameFragment;
+    private Fragment mResultFragment;
     final FragmentManager fm = this.getSupportFragmentManager();
     private final static String TAG = "MainActivity";
 
@@ -85,7 +85,9 @@ public class MainActivity extends AppCompatActivity {
      */
 
     public void newGame(){
-        popBackStack();
+        for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+            fm.popBackStack();
+        }
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, new GameFragment());
         transaction.commit();
@@ -95,24 +97,21 @@ public class MainActivity extends AppCompatActivity {
      *
      * gameOver
      *
+     * initialises a new game so when the back button is pressed, a new game has been started
      * Replaces the game fragment with the result fragment after the game is over.
      *
      * @param result receives the result of the game as an array that is sent in a bundle to the new fragment.
      */
 
     public void gameOver(int[] result){
-        Fragment mResultFragment = new ResultFragment();
+        newGame();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        mResultFragment = new ResultFragment();
         Bundle bundle = new Bundle();
         bundle.putIntArray("params", result);
         mResultFragment.setArguments(bundle);
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, mResultFragment).addToBackStack(null);
         transaction.commit();
     }
 
-    public void popBackStack(){
-        for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
-            fm.popBackStack();
-        }
-    }
 }
