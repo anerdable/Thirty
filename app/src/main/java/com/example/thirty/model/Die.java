@@ -20,7 +20,6 @@ public class Die implements Parcelable {
     private Random random = new Random();
     private int value;
     private boolean idle;
-    private final static String TAG = "Die";
 
     /**
      * Die
@@ -119,7 +118,6 @@ public class Die implements Parcelable {
      */
 
     public void reset(){
-        value = 0;
         idle = false;
     }
 

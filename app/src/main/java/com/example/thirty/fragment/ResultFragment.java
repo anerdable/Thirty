@@ -36,7 +36,6 @@ public class ResultFragment extends Fragment {
     private List<TextView> textViews = new ArrayList<>();
     private Button newGame;
     private TextView low, fours, fives, sixes, sevens, eights, nines, tens, elevens, twelves, totalScore;
-    private final static String TAG = "ResultFragment";
 
 
     /**

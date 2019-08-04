@@ -27,8 +27,6 @@ import com.example.thirty.fragment.ResultFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    final Fragment mGameFragment = new GameFragment();
-    final Fragment mResultFragment = new ResultFragment();
     final FragmentManager fm = this.getSupportFragmentManager();
     private final static String TAG = "MainActivity";
 
@@ -43,11 +41,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         Fragment fragment;
 
         FragmentManager fm = getSupportFragmentManager();
+
         if (savedInstanceState != null){
             fragment = fm.getFragment(savedInstanceState, String.valueOf(R.id.fragment_container));
         } else {
@@ -56,10 +56,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (fragment == null) {
             fm.beginTransaction()
-                    .add(R.id.fragment_container, mGameFragment)
+                    .add(R.id.fragment_container, new GameFragment())
                     .commit();
         }
-        Log.d(TAG, "onCreate() called");
     }
 
     /**
@@ -78,49 +77,17 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().putFragment(outState,String.valueOf(R.id.fragment_container), fragment);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.d(TAG, "onStart() called");
-    }
-
-    @Override
-    public void onResume(){
-        super.onResume();
-        Log.d(TAG, "onResume() called");
-    }
-
-    @Override
-    public void onDestroy(){
-        super.onDestroy();
-        Log.d(TAG, "onDestroy() called");
-    }
-
-    @Override
-    public void onPause(){
-        super.onPause();
-        Log.d(TAG, "onPause() called");
-    }
-
-    @Override
-    public void onStop(){
-        super.onStop();
-        Log.d(TAG, "onStop() called");
-    }
-
     /**
      * newGame
      *
-     * Replaces the start fragment with the game fragment
+     * Pops the entire backstack
+     * Places a new GameFragment in the fragment container to initialise a new game
      */
 
     public void newGame(){
-        for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
-            fm.popBackStack();
-        }
+        popBackStack();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, mGameFragment);
-        transaction.addToBackStack("game");
+        transaction.replace(R.id.fragment_container, new GameFragment());
         transaction.commit();
     }
 
@@ -134,12 +101,18 @@ public class MainActivity extends AppCompatActivity {
      */
 
     public void gameOver(int[] result){
+        Fragment mResultFragment = new ResultFragment();
         Bundle bundle = new Bundle();
         bundle.putIntArray("params", result);
         mResultFragment.setArguments(bundle);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, mResultFragment);
-        transaction.addToBackStack("result");
+        transaction.replace(R.id.fragment_container, mResultFragment).addToBackStack(null);
         transaction.commit();
+    }
+
+    public void popBackStack(){
+        for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+            fm.popBackStack();
+        }
     }
 }

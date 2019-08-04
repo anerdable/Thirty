@@ -46,7 +46,6 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     private List<ImageButton> images = new ArrayList<>();
     private List<Die> dice = new ArrayList<>();
     private Context mContext;
-    private final static String TAG = "GameFragment";
     private static final String GAME_PARCEL = "com.example.thirty.model.game";
 
     /**
@@ -90,7 +89,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     /**
      * onCreateView
      *
-     * this method sets up the entire game view. it constructs all IU artifacts such as ImageButtons, Buttons for rolling
+     * this method sets up the entire game view. it constructs all UI artifacts such as ImageButtons, Buttons for rolling
      * and scoring and the spinner to choose point target from.
      *
      * @param inflater the layoutInflator object that is used to inflate view to the fragment
@@ -115,11 +114,33 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         die5.setOnClickListener(this);
         die6 = view.findViewById(R.id.die_6);
         die6.setOnClickListener(this);
+
         roll = view.findViewById(R.id.rollButton);
-        roll.setOnClickListener(this);
+
+        if (mGame.getRoll() > 2){
+            roll.setEnabled(false);
+        } else if (mGame.gameOver) {
+            gameOver();
+        } else {
+            roll.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    roll();
+                }
+            });
+        }
+
         spinner = view.findViewById(R.id.spinner);
+
         score = view.findViewById(R.id.scoreButton);
-        score.setOnClickListener(this);
+
+        score.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                score();
+            }
+        });
+
         images.add(die1);
         images.add(die2);
         images.add(die3);
@@ -141,27 +162,23 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onSaveInstanceState(Bundle outState){
         super.onSaveInstanceState(outState);
-        Log.d(TAG, "onSaveInstanceState called" + mGame);
         outState.putParcelable(GAME_PARCEL, mGame);
     }
 
     /**
-     * setFirstRound
+     * setRound
      *
-     * Creates a new set of dice and passes it to a new Game.
      * Updates the UI with correct image of each die's value (all 1 in the first set).
      *
      */
 
     private void setRound(){
         setImages();
-        for (ImageButton ib : images){
-            if (mGame.getRoll() == 0){
+        if (mGame.getRoll() == 0){
+            score.setEnabled(false);
+            for (ImageButton ib : images){
                 ib.setClickable(false);
             }
-        }
-        if (mGame.getRoll() == 0){
-            score.setClickable(false);
         }
         setSpinner();
     }
@@ -169,36 +186,21 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     /**
      * onClick
      *
-     * generic onClick method that is used for all user interactions with the view.
-     * Reacts differently based on what element was clicked.
+     * generic onClick method that acts the same for all ImageButtons in the view.
      *
      * @param v takes the view as a parameter to be able to identify the element that was clicked.
      */
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
-            case R.id.rollButton:
-                roll();
-                break;
-            case R.id.scoreButton:
-                score();
-                break;
-            case R.id.die_1:
-            case R.id.die_2:
-            case R.id.die_3:
-            case R.id.die_4:
-            case R.id.die_5:
-            case R.id.die_6:
-                react(v.getId());
-                break;
-        }
+        react(v.getId());
     }
 
     /**
      * setImages
      *
-     * Updates the UI with correct die image depending on its value.
+     * Updates the UI with correct die image depending on its value, as well as a RED background indicating if the die is
+     * set as idle by the user.
      */
 
     private void setImages(){
@@ -208,21 +210,39 @@ public class GameFragment extends Fragment implements View.OnClickListener {
             switch(index){
                 case 0:
                     die1.setImageResource(res);
+                    if (die.isIdle()){
+                        die1.setBackgroundColor(RED);
+                    }
                     break;
                 case 1:
                     die2.setImageResource(res);
+                    if (die.isIdle()){
+                        die2.setBackgroundColor(RED);
+                    }
                     break;
                 case 2:
                     die3.setImageResource(res);
+                    if (die.isIdle()){
+                        die3.setBackgroundColor(RED);
+                    }
                     break;
                 case 3:
                     die4.setImageResource(res);
+                    if (die.isIdle()){
+                        die4.setBackgroundColor(RED);
+                    }
                     break;
                 case 4:
                     die5.setImageResource(res);
+                    if (die.isIdle()){
+                        die5.setBackgroundColor(RED);
+                    }
                     break;
                 case 5:
                     die6.setImageResource(res);
+                    if (die.isIdle()){
+                        die6.setBackgroundColor(RED);
+                    }
                     break;
             }
         }
@@ -234,19 +254,21 @@ public class GameFragment extends Fragment implements View.OnClickListener {
      * Takes the set of dice that was created in the beginning of the game and rolls each die that is
      * assessed a random value through the model class.
      * Also toggles the roll button as unclickable if the round is finished to let the user choose a score.
-     * Updates the ImageButton according to the new value of the dice.
+     * Updates the ImageButtons according to the new value of the dice.
      */
 
     private void roll(){
+        if (mGame.getRoll() >= 2){
+            roll.setEnabled(false);
+        }
+
         for (ImageButton ib : images) {
             ib.setClickable(true);
         }
+
         spinner.setSelection(0);
-        score.setClickable(true);
+        score.setEnabled(true);
         dice = mGame.newRoll();
-        if (mGame.getRoll() == 3){
-            roll.setClickable(false);
-        }
         setImages();
     }
 
@@ -270,8 +292,8 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         }  else {
             int points = new Counter(dice, position).getResult();
             mGame.setScore(position, points);
-            roll.setClickable(true);
-            score.setClickable(false);
+            roll.setEnabled(true);
+            score.setEnabled(false);
             spinner.setSelection(0);
             for (ImageButton ib : images){
                 ib.setBackgroundColor(0);
