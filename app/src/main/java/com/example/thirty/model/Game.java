@@ -212,7 +212,7 @@ public class Game implements Parcelable {
      */
 
     public void newRound(){
-        if (round == 1){
+        if (round == 9){
             gameOver = true;
         } else {
             for (Die die: dice){
