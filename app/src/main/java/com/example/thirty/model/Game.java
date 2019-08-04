@@ -21,7 +21,6 @@ public class Game implements Parcelable {
     private List<Die> dice;
     private List<String> options;
     public boolean gameOver;
-    private final static String TAG = "Game";
 
     /**
      * Game
@@ -147,7 +146,7 @@ public class Game implements Parcelable {
     /**
      * getDice
      *
-     * @return the dice that are being used in the game, currently never used
+     * @return the dice that are being used in the game
      */
 
     public List<Die> getDice(){

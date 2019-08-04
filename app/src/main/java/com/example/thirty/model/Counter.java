@@ -13,7 +13,6 @@ public class Counter {
     private List<Die> mDice;
     private List<List<Integer>> allCombinations = new ArrayList<>();
     private int result;
-    private final static String TAG = "Counter";
 
     /**
      * Counter
@@ -151,16 +150,12 @@ public class Counter {
         };
         Collections.sort(combinations, comparator);
 
-        Log.d("hoppsan", " det här är alla kombinationer " + combinations);
-
         for (List<Integer> combination : combinations){
             while (mValues.size() > 0){
                 if (valid(combination)){
-                    Log.d("ja", "den här funkar " + combination);
                     toAdd += sumUpCombination(combination);
                     generateNewValues(combination);
                 } else {
-                    Log.d("nej", "den här funkar inte " + combination);
                     break;
                 }
             }
@@ -243,11 +238,9 @@ public class Counter {
      */
 
     private void generateNewValues(List<Integer> combination){
-        Log.d("hej", combination +" kombinationen som nyss användes ");
         for (Integer i : combination){
             mValues.remove(i);
         }
-        Log.d("hallå", " här är nya värden " + mValues);
     }
 
     /**
