@@ -36,6 +36,7 @@ public class Game implements Parcelable {
         this.round = 0;
         this.score = new int[ROUNDS];
         this.gameOver = false;
+        this.options = new ArrayList<>();
         enableOptions();
     }
 
@@ -48,13 +49,14 @@ public class Game implements Parcelable {
      */
 
     protected Game(Parcel in) {
-        roll = in.readInt();
-        round = in.readInt();
         dice = new ArrayList<>();
         in.readTypedList(dice, Die.CREATOR);
+        roll = in.readInt();
+        round = in.readInt();
         score = in.createIntArray();
-        options = in.createStringArrayList();
         gameOver = in.readInt() == 1;
+        options = new ArrayList<>();
+        in.readStringList(options);
     }
 
     /**
@@ -84,7 +86,6 @@ public class Game implements Parcelable {
      */
 
     private void enableOptions(){
-        options = new ArrayList<>();
         options.add("Choose score");
         options.add("Low");
         for (int i = 4; i < 13; i++){
@@ -266,11 +267,12 @@ public class Game implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(round);
-        dest.writeInt(roll);
         dest.writeTypedList(dice);
+        dest.writeInt(roll);
+        dest.writeInt(round);
         dest.writeIntArray(score);
         dest.writeInt(gameOver ? 1 : 0);
+        dest.writeStringList(options);
     }
 
     public String toString(){
