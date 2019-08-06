@@ -115,33 +115,9 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         die5.setOnClickListener(this);
         die6 = view.findViewById(R.id.die_6);
         die6.setOnClickListener(this);
-
         roll = view.findViewById(R.id.rollButton);
-
-        if (mGame.getRoll() > 2){
-            roll.setEnabled(false);
-        } else if (mGame.gameOver) {
-            gameOver();
-        } else {
-            roll.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    roll();
-                }
-            });
-        }
-
         spinner = view.findViewById(R.id.spinner);
-
         score = view.findViewById(R.id.scoreButton);
-
-        score.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                score();
-            }
-        });
-
         images.add(die1);
         images.add(die2);
         images.add(die3);
@@ -174,6 +150,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
      */
 
     private void setRound(){
+        attachListeners();
         setImages();
         if (mGame.getRoll() == 0){
             score.setEnabled(false);
@@ -182,6 +159,29 @@ public class GameFragment extends Fragment implements View.OnClickListener {
             }
         }
         setSpinner();
+    }
+
+    private void attachListeners(){
+        if (mGame.getRoll() > 2){
+            roll.setEnabled(false);
+        } else if (mGame.gameOver) {
+            gameOver();
+        } else {
+            roll.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    roll();
+                }
+            });
+        }
+
+        score.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                score();
+            }
+        });
+
     }
 
     /**
